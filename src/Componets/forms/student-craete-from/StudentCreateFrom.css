@@ -1,0 +1,34 @@
+.studentCreateFrom {
+    /* font-family: 'Courier New', Courier, monospace; */
+    font-size: 14px !important;
+}
+
+.studentCreateFrom .card-body{
+    width: 90%;
+    padding: 20px;
+    border: 1px solid gainsboro;
+    margin: 10px auto;
+    border-radius: 10px;
+}
+.studentCreateFrom .card{
+    border: none;
+}
+
+.studentCreateFrom .form-control{
+    font-size: 14px !important;
+}
+.studentCreateFrom .heading h6{
+    margin: 0 !important;
+}
+.studentCreateFrom .form-buttons button{
+    margin: 3px;
+}
+.studentCreateFrom .from-lable{
+    color: black;
+    font-weight:500
+}
+
+.studentCreateFrom .form-date{
+    appearance: none; /* Removes default OS styling for more control */
+  -webkit-appearance: none
+}
