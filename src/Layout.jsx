@@ -1,6 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Header from "./Componets/header/Header";
 import Sidebar from "./Componets/sidebar/Sidebar";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 const Layout = () => {
   return (

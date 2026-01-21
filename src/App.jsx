@@ -9,22 +9,73 @@ import "./App.css";
 import Layout from "./Layout";
 import Dashboard from "./Componets/dashboard/Dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import StudentCreateFrom from "./Componets/forms/student-craete-from/StudentCreateFrom";
 import StudentsTable from "./Componets/forms/students/StudentsTable";
 import StudentEditForm from "./Componets/forms/student-craete-from/StudentEditForm";
 
 import { LanguageProvider } from "./context/LanguageContext";
+import Login from "./Componets/Login/Login";
+import ProtectedRoute from "./Componets/Login/ProtectedRoute";
+// src/App.js
+import 'bootstrap/dist/css/bootstrap.min.css';
+// ... rest of your App
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Dashboard />} />
-        <Route path="student-create-form" element={<StudentCreateFrom />} />
-        <Route path="students-table" element={<StudentsTable />} />
-        <Route path="student/edit/:id" element={<StudentEditForm />} />
-      </Route>
+      <>
+        {/* Public Route */}
+        <Route path="/" element={<Login />} />
+
+        {/* Protected Layout */}
+        <Route
+          path="/layout"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="student-create-form"
+            element={
+              <ProtectedRoute>
+                <StudentCreateFrom />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="students-table"
+            element={
+              <ProtectedRoute>
+                <StudentsTable />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="student/edit/:id"
+            element={
+              <ProtectedRoute>
+                <StudentEditForm />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+      </>
     )
   );
 

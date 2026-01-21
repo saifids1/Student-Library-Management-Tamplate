@@ -1,8 +1,14 @@
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+
+
 import axios from "axios";
 import { useState } from "react";
 import { useLanguage } from "../../../context/LanguageContext";
+import "../student-craete-from/StudentCreateFrom.css";
+
+
 
 import { studentFormText } from "../../../i18n/studentForm";
 
@@ -21,7 +27,8 @@ const t = studentFormText[language];
     dateOfBirth: "",
     dateOfAdmission: "",
     ability: "",
-    class: "",
+  //  class: "",
+    studentClass: "",
     classleavingDate: "",
     resoneForLeaving: "",
     dateofDigri: "",
@@ -45,7 +52,8 @@ const t = studentFormText[language];
     DateOfBirth: formData.dateOfBirth,
     DateOfAdmission: formData.dateOfAdmission,
     Ability: formData.ability || null,
-    Class: formData.class,
+   // Class: formData.class,
+    Class: formData.studentClass,
     ClassleavingDate: formData.classleavingDate || null,
     ResoneForLeaving: formData.resoneForLeaving || null,
     DateofDigri: formData.dateofDigri || null,
@@ -64,7 +72,7 @@ const t = studentFormText[language];
 
 
   return (
-    <div className="studentCreateFrom">
+      <div className="studentCreateFrom" style={{ minHeight: "400px", border: "2px solid red" }}>
       <Card>
         <Card.Body className="card-body">
           <Form onSubmit={handleSubmit}>
@@ -136,12 +144,20 @@ const t = studentFormText[language];
 
               <div className="col-md-6 col-sm-12">
                 <Form.Label>{t.class} *</Form.Label>
-                <Form.Control
+                {/* <Form.Control
                   name="class"
                   value={formData.class}
                   onChange={handleChange}
                   required
+                /> */}
+
+                <Form.Control
+                  name="studentClass"
+                  value={formData.studentClass}
+                  onChange={handleChange}
+                  required
                 />
+
               </div>
             </div>
 
@@ -200,6 +216,8 @@ const t = studentFormText[language];
         </Card.Body>
       </Card>
     </div>
+
+
   );
 };
 
