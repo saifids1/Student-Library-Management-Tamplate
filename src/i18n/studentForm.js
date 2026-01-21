@@ -7,8 +7,7 @@ export const studentFormText = {
     dob: "Date of Birth",
     doa: "Date of Admission",
     ability: "Ability",
-   // class: "Class",
-    studentClass: "Class",
+    class: "Class",
     leavingDate: "Class Leaving Date",
     reason: "Reason for Leaving",
     degreeDate: "Date of Degree",
@@ -21,8 +20,8 @@ export const studentFormText = {
     Search:"Search",
     EditStudent:"Edit Student",
     StudentLibrary:"Student Details",
-     StudentCreateFrom:"Student Create Form",
-       StudentsTable:"Students Table"
+    StudentCreateFrom:"Create Student",
+    StudentsTable:"Students List"
   },
   ur: {
     title: "طالب علم بنائیں",
@@ -32,7 +31,7 @@ export const studentFormText = {
     dob: "تاریخ پیدائش",
     doa: "تاریخ داخلہ",
     ability: "قابلیت",
-    studentClass: "جماعت",
+    class: "جماعت",
     leavingDate: "تاریخ رخصت",
     reason: "وجہ",
     degreeDate: "تاریخ ڈگری",

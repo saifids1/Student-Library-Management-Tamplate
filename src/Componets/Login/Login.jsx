@@ -109,7 +109,7 @@ const handleSubmit = async (e) => {
 
     //  ROLE CHECK (UPDATED)
     if (data.roles?.includes("SubAdmin") || data.roles?.includes("Admin")) {
-      navigate("/layout");
+      navigate("/layout/students-table");
     } else {
       Swal.fire({
         icon: "error",
@@ -152,7 +152,7 @@ useEffect(() => {
       <div
         className="container-fluid"
         style={{
-          backgroundImage: "url(/images/login-bg.webp)",
+          backgroundImage: "url(/images/login-bg.PNG)",
           height: "100vh",
           width: "100%",
           backgroundSize: "cover",
@@ -166,30 +166,6 @@ useEffect(() => {
               <h2 className="text-center pt-4" style={{ fontWeight: "bold" }}>
                 Login
               </h2>
-
-              {/* <h6 className="login-w-icon text-center mt-4 mb-4">
-                Login with Socials{" "}
-              </h6>
-
-              <div className="socials-icons mb-2 mt-4">
-                <div className="iconss">
-                  <a href="/">
-                    <img src="/images/google.svg" alt="Google" />
-                  </a>
-                </div>
-
-                <div className="iconss">
-                  <a href="/">
-                    <img src="/images/facebook.svg" alt="Facebook" />
-                  </a>
-                </div>
-
-                <div className="iconss">
-                  <a href="/">
-                    <img src="/images/linkin.svg" alt="LinkedIn" />
-                  </a>
-                </div>
-              </div> */}
 
               <h6 className="login-w-icon text-center mt-4 mb-4 fs-6">
                  Login with Email{" "}
@@ -241,7 +217,7 @@ useEffect(() => {
                     onChange={(e) => setRememberMe(e.target.checked)}
                   />
 
-                  <label htmlFor="rememberMe" className="forgot mb-0">
+                  <label htmlFor="rememberMe" className="forgot text-black mb-0">
                     Remember Me
                   </label>
 
@@ -264,13 +240,14 @@ useEffect(() => {
 
                   <button
                   type="submit"
-                  className="btn btn-forgot btn-lg btn-block d-flex align-items-center justify-content-center"
+                  className="btn bg-primary w-100 btn-lg btn-block d-flex align-items-center justify-content-center"
+
                   disabled={isLoading}
                 >
                   {isLoading ? (
                     <>
                       <span
-                        className="spinner-border spinner-border-sm me-2"
+                        className="spinner-border  spinner-border-sm me-2"
                         role="status"
                         aria-hidden="true"
                       ></span>

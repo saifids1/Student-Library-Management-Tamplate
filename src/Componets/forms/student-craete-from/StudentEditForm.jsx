@@ -4,8 +4,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../context/LanguageContext";
-
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 import { studentFormText } from "../../../i18n/studentForm";
+import { Link } from "react-router-dom";
+
 
 const API_URL = "https://localhost:7000/api/Student";
 
@@ -93,8 +96,15 @@ const t = studentFormText[language];
 
     try {
       await axios.put(`${API_URL}/${id}`, payload);
-      alert("Student updated successfully");
-      navigate("/students-table"); // change route if needed
+     // alert("Student updated successfully");
+       Swal.fire({
+          icon: "success",
+          title: "Updated!",
+          text: "Student updated successfully",
+          timer: 1500,
+          showConfirmButton: false
+        });
+        navigate("/layout/students-table")
     } catch (error) {
       console.error("Update Error:", error.response?.data);
       alert("Update failed");
@@ -103,8 +113,7 @@ const t = studentFormText[language];
 
   return (
     <div className="studentCreateFrom">
-      <Card>
-        <Card.Body>
+        {/* <Card.Body> */}
           <Form onSubmit={handleSubmit}>
             <Form.Text className="text-muted">{t.EditStudent}</Form.Text>
 
@@ -225,12 +234,16 @@ const t = studentFormText[language];
             {/* Buttons */}
             <div className="text-end mt-4">
                <button type="submit" className="btn btn-outline-primary">{t.create}</button>
+
+               <Link
+            to="/layout/students-table"
+             className="text-gray-800 px-6 py-3 mb-10 rounded-lg no-underline" >
               <button type="reset" className="btn btn-outline-primary">{t.back}</button>
+              </Link>
 
             </div>
           </Form>
-        </Card.Body>
-      </Card>
+        {/* </Card.Body> */}
     </div>
   );
 };

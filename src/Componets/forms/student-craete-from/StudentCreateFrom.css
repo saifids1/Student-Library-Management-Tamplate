@@ -1,19 +1,29 @@
 .studentCreateFrom {
     /* font-family: 'Courier New', Courier, monospace; */
     font-size: 14px !important;
+     width: 90%;
+   padding: 20px;
+    border: 1px solid rgb(205, 205, 205);
+    margin: 10px auto;
+    border-radius: 10px;
 }
 
 .studentCreateFrom .card-body{
     width: 90%;
-    padding: 20px;
-    border: 1px solid gainsboro;
+   padding: 20px;
+    border: 1px solid rgb(217, 87, 87);
     margin: 10px auto;
     border-radius: 10px;
-}
-.studentCreateFrom .card{
-    border: none;
-}
 
+}
+.studentCreateFrom .card-body{
+    border: none;
+    background-color: white !important;
+}
+.studentCreateFrom .card-body form{
+     padding: 20px;
+    background-color: white
+}
 .studentCreateFrom .form-control{
     font-size: 14px !important;
 }

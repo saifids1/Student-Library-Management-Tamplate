@@ -7,8 +7,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../context/LanguageContext";
-
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 import { studentFormText } from "../../../i18n/studentForm";
+import { Link } from "react-router-dom";
 
 
 const API_URL = "https://localhost:7000/api/Student";
@@ -76,7 +78,14 @@ const handleDelete = async (id) => {
     await axios.delete(`${API_URL}/${id}`);
     // Remove deleted student from UI
     setStudents((prev) => prev.filter((s) => s.id !== id));
-    alert("Student deleted successfully");
+   // alert("Student deleted successfully");
+      Swal.fire({
+      icon: "success",
+      title: "deleted !",
+      text: "Student deleted successfully",
+      timer: 1500,
+      showConfirmButton: false
+    });
   } catch (error) {
     console.error("Delete failed", error);
     alert("Failed to delete student");
@@ -89,11 +98,13 @@ const handleDelete = async (id) => {
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-3">
           <h5 className="fw-semibold">{t.StudentsList}</h5>
-          <a href="/layout/student-create-form">
+            <Link
+                      to="/layout/student-create-form"
+                       className="" >
             <button className="btn btn-outline-primary btn-sm">
              {t.CreateStudent}
             </button>
-          </a>
+          </Link>
         </div>
         {/* Controls */}
         <hr />

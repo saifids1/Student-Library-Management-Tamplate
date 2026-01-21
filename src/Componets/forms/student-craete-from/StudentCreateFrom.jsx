@@ -1,12 +1,14 @@
 import Card from "react-bootstrap/Card";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
 
 import axios from "axios";
 import { useState } from "react";
 import { useLanguage } from "../../../context/LanguageContext";
 import "../student-craete-from/StudentCreateFrom.css";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -17,6 +19,7 @@ const API_URL = "https://localhost:7000/api/Student";
 
 const StudentCreateFrom = () => {
 
+  const navigate =useNavigate();
   const { language } = useLanguage();
 const t = studentFormText[language];
 
@@ -27,8 +30,7 @@ const t = studentFormText[language];
     dateOfBirth: "",
     dateOfAdmission: "",
     ability: "",
-  //  class: "",
-    studentClass: "",
+    class: "",
     classleavingDate: "",
     resoneForLeaving: "",
     dateofDigri: "",
@@ -52,8 +54,7 @@ const t = studentFormText[language];
     DateOfBirth: formData.dateOfBirth,
     DateOfAdmission: formData.dateOfAdmission,
     Ability: formData.ability || null,
-   // Class: formData.class,
-    Class: formData.studentClass,
+    Class: formData.class,
     ClassleavingDate: formData.classleavingDate || null,
     ResoneForLeaving: formData.resoneForLeaving || null,
     DateofDigri: formData.dateofDigri || null,
@@ -62,7 +63,16 @@ const t = studentFormText[language];
 
   try {
     const res = await axios.post(API_URL, payload);
-    alert("Student created successfully");
+   // alert("Student created successfully");
+      Swal.fire({
+          icon: "success",
+          title: "Added!",
+          text: "Student created successfully",
+          timer: 1500,
+          showConfirmButton: false
+        });
+        navigate("/layout/students-table")
+        
     console.log(res.data);
   } catch (err) {
     console.error("API Error:", err.response?.data);
@@ -72,12 +82,11 @@ const t = studentFormText[language];
 
 
   return (
-      <div className="studentCreateFrom" style={{ minHeight: "400px", border: "2px solid red" }}>
-      <Card>
-        <Card.Body className="card-body">
+      <div className="studentCreateFrom">
+      {/* <Card> */}
+        {/* <div className="card-body"> */}
           <Form onSubmit={handleSubmit}>
             <Form.Text>{t.title}</Form.Text>
-
             <br />
             <Form.Text className="text-muted">{t.required}</Form.Text>
 
@@ -144,19 +153,14 @@ const t = studentFormText[language];
 
               <div className="col-md-6 col-sm-12">
                 <Form.Label>{t.class} *</Form.Label>
-                {/* <Form.Control
+                <Form.Control
                   name="class"
                   value={formData.class}
                   onChange={handleChange}
                   required
-                /> */}
-
-                <Form.Control
-                  name="studentClass"
-                  value={formData.studentClass}
-                  onChange={handleChange}
-                  required
                 />
+
+             
 
               </div>
             </div>
@@ -209,14 +213,18 @@ const t = studentFormText[language];
             <div className="form-buttons text-end mt-4">
              
               <button type="submit" className="btn btn-outline-primary">{t.create}</button>
+
+                <Link
+            to="/layout/students-table"
+             className="text-gray-800 px-6 py-3 mb-10 rounded-lg no-underline" >
               <button type="reset" className="btn btn-outline-primary">{t.back}</button>
+              </Link>
 
             </div>
           </Form>
-        </Card.Body>
-      </Card>
+        {/* </div> */}
+      {/* </Card> */}
     </div>
-
 
   );
 };
