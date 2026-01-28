@@ -1,44 +1,47 @@
+.studentCreateFrom .form-div {
+  /* padding: 20px; */
+  border: 1px solid rgb(205, 205, 205);
+  /* margin: 10px auto; */
+  border-radius: 10px;
+}
+
 .studentCreateFrom {
-    /* font-family: 'Courier New', Courier, monospace; */
-    font-size: 14px !important;
-     width: 90%;
-   padding: 20px;
-    border: 1px solid rgb(205, 205, 205);
-    margin: 10px auto;
-    border-radius: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  border: none;
+  overflow: hidden;
+  margin: auto;
+  
+  background-color: white !important;
+}
+.studentCreateFrom form {
+  border-radius: 10px;
+  padding: 20px;
+  background-color: white;
+}
+.studentCreateFrom .form-control {
+  font-size: 14px !important;
+}
+.studentCreateFrom .heading h6 {
+  margin: 0 !important;
+}
+.studentCreateFrom .form-buttons button {
+  margin: 3px;
+}
+.studentCreateFrom .from-lable {
+  color: black;
+  font-weight: 500;
 }
 
-.studentCreateFrom .card-body{
-    width: 90%;
-   padding: 20px;
-    border: 1px solid rgb(217, 87, 87);
-    margin: 10px auto;
-    border-radius: 10px;
-
-}
-.studentCreateFrom .card-body{
-    border: none;
-    background-color: white !important;
-}
-.studentCreateFrom .card-body form{
-     padding: 20px;
-    background-color: white
-}
-.studentCreateFrom .form-control{
-    font-size: 14px !important;
-}
-.studentCreateFrom .heading h6{
-    margin: 0 !important;
-}
-.studentCreateFrom .form-buttons button{
-    margin: 3px;
-}
-.studentCreateFrom .from-lable{
-    color: black;
-    font-weight:500
+.studentCreateFrom .form-date {
+  appearance: none; /* Removes default OS styling for more control */
+  -webkit-appearance: none;
 }
 
-.studentCreateFrom .form-date{
-    appearance: none; /* Removes default OS styling for more control */
-  -webkit-appearance: none
+.studentCreateFrom label.form-check-label {
+  color: black !important;
+  text-decoration: none !important;
+}
+.studentCreateFrom p {
+  margin-bottom: 0 !important;
 }

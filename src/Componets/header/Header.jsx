@@ -55,7 +55,7 @@ const Header = () => {
 
   {/* CENTER: Student Details / Title */}
   <div className="header-center">
-    <h3 className="header-title">{t.StudentLibrary}</h3>
+    <h5 className="header-title">{t.WebsiteName}</h5>
   </div>
 
   {/* RIGHT: Existing Controls */}
