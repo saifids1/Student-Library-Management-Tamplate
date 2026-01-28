@@ -1,249 +1,242 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../students/StudentsTable.css";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import UpDownArrow from "../../../assets/dasdhboard/up-down.png";
-import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useLanguage } from "../../../context/LanguageContext";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { studentFormText } from "../../../i18n/studentForm";
-import { Link } from "react-router-dom";
 
+import UpDownArrow from "../../../assets/dasdhboard/up-down.png";
+import pdfIcon from "../../../assets/svg/pdf-file.png";
+import excelIcon from "../../../assets/svg/xlsx-file-format-extension.png";
+import moreicon from "../../../assets/svg/more.png";
+import csvIcon from "../../../assets/svg/csv.png";
 
 const API_URL = "https://localhost:7000/api/Student";
-
-
-
- 
-
 
 const StudentsTable = () => {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const navigate = useNavigate();
+  // 🔹 pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 50;
 
-   const { language } = useLanguage();
+  const navigate = useNavigate();
+  const { language } = useLanguage();
   const t = studentFormText[language];
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchStudents = async () => {
       try {
         const res = await axios.get(API_URL);
-        setStudents(res.data); // API returns array
+        setStudents([...res.data].reverse());
       } catch (error) {
         console.error("Failed to fetch students", error);
       } finally {
         setLoading(false);
       }
     };
-
     fetchStudents();
   }, []);
 
   const formatDate = (date) => {
-  if (!date) return "-";
-  return new Date(date).toISOString().split("T")[0];
-};
+    if (!date) return "-";
+    return new Date(date).toISOString().split("T")[0];
+  };
 
-const filteredStudents = students.filter((student) => {
-  const search = searchTerm.toLowerCase();
+  // 🔹 filter
+  const filteredStudents = students.filter((student) => {
+    const search = searchTerm.toLowerCase();
+    return (
+      student.nameWithFathersname?.toLowerCase().includes(search) ||
+      student.country?.toLowerCase().includes(search) ||
+      formatDate(student.dateOfBirth).includes(search) ||
+      formatDate(student.dateOfAdmission).includes(search) ||
+      student.class?.toLowerCase().includes(search)
+    );
+  });
 
-  return (
-    student.nameWithFathersname?.toLowerCase().includes(search) ||
-    student.country?.toLowerCase().includes(search) ||
-    formatDate(student.dateOfBirth).includes(search) ||
-    formatDate(student.dateOfAdmission).includes(search) ||
-    student.class?.toLowerCase().includes(search)
+  // 🔹 pagination calculations
+  const totalRecords = filteredStudents.length;
+  const totalPages = Math.ceil(totalRecords / rowsPerPage);
+
+  const startIndex = (currentPage - 1) * rowsPerPage;
+  const currentStudents = filteredStudents.slice(
+    startIndex,
+    startIndex + rowsPerPage,
   );
-});
+  const startEntry = totalRecords === 0 ? 0 : startIndex + 1;
+  const endEntry = Math.min(startIndex + rowsPerPage, totalRecords);
 
+  // EDIT
+  const handleEdit = (id) => {
+    navigate(`/layout/student/edit/${id}`);
+  };
 
+  // DELETE
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this student?"))
+      return;
 
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      setStudents((prev) => prev.filter((s) => s.id !== id));
 
-// EDIT
-const handleEdit = (id) => {
-  navigate(`/layout/student/edit/${id}`);
-};
-
-// DELETE
-const handleDelete = async (id) => {
-  if (!window.confirm("Are you sure you want to delete this student?")) return;
-
-  try {
-    await axios.delete(`${API_URL}/${id}`);
-    // Remove deleted student from UI
-    setStudents((prev) => prev.filter((s) => s.id !== id));
-   // alert("Student deleted successfully");
       Swal.fire({
-      icon: "success",
-      title: "deleted !",
-      text: "Student deleted successfully",
-      timer: 1500,
-      showConfirmButton: false
-    });
-  } catch (error) {
-    console.error("Delete failed", error);
-    alert("Failed to delete student");
-  }
-};
+        icon: "success",
+        title: "Deleted!",
+        text: "Student deleted successfully",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch (error) {
+      console.error("Delete failed", error);
+    }
+  };
 
   return (
     <div className="card students-table">
       <div className="container-fluid px-4 py-3">
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h5 className="fw-semibold">{t.StudentsList}</h5>
-            <Link
-                      to="/layout/student-create-form"
-                       className="" >
-            <button className="btn btn-outline-primary btn-sm">
-             {t.CreateStudent}
-            </button>
-          </Link>
-        </div>
-        {/* Controls */}
-        <hr />
-        <div className="d-flex justify-content-between align-items-center mb-3">
-          <div className="d-flex gap-2">
-            <button className="btn btn-primary btn-sm">
-              Show 10 rows{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-caret-down-fill"
-                viewBox="0 0 16 16"
-              >
-                <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
-              </svg>
-            </button>
-            <button className="btn btn-primary btn-sm">CSV</button>
+          <div className="w-45">
+            <h5 className="fw-semibold">{t.StudentsList}</h5>
           </div>
-          <div className="d-flex align-items-center gap-2">
-            <span className="fw-semibold">{t.Search}</span>
-           
-            <input
-            type="text"
-            className="form-control form-control-sm w-64 search-bar"
-            placeholder={`Search by ${t.name}, ${t.country}, ${t.class}`}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
 
+          <div className=" text-center">
+            <div className="d-flex align-items-center gap-2">
+              <span className="fw-semibold">{t.Search}</span>
+              <input
+                type="text"
+                className="form-control form-control-sm w-64 search-bar"
+                placeholder={`Search by ${t.name}, ${t.country}, ${t.class}`}
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1); // reset page on search
+                }}
+              />
+            </div>
+          </div>
+
+          <div className=" text-end icons-div">
+            <img src={csvIcon} alt=""  data-toggle="tooltip" data-placement="left" title="convert to  CSV" />
+            <img src={excelIcon} alt=""  data-toggle="tooltip" data-placement="left" title="convert to excel"/>
+            <img src={pdfIcon} alt=""  data-toggle="tooltip" data-placement="left" title="convert to pdf"/>
+            <Link to="/layout/student-create-form"><img src={moreicon} alt=""  data-toggle="tooltip" data-placement="left" title="Add Student" /></Link>
           </div>
         </div>
+
+        <hr />
+
         {/* Table */}
         <div className="table-responsive shadow-sm rounded bg-white">
-          <table className="table table-bordered  table-striped  table-hover mb-0">
+          <table className="table table-bordered table-striped table-hover mb-0">
             <thead className="bg-light">
               <tr>
-                <th className="text-start">
-                   {t.name}
-                  <img
-                    src={UpDownArrow}
-                    alt=""
-                    style={{ width: "14px", height: "14px" }}
-                  />
+                <th>
+                  {t.name} <img src={UpDownArrow} width="14" />
                 </th>
                 <th>
-
-              {t.country}               
-                 <img
-                    src={UpDownArrow}
-                    alt=""
-                    style={{ width: "14px", height: "14px" }}
-                  />
+                  {t.country} <img src={UpDownArrow} width="14" />
                 </th>
                 <th>
-                  {t.dob}
-                  <img
-                    src={UpDownArrow}
-                    alt=""
-                    style={{ width: "14px", height: "14px" }}
-                  />
+                  {t.dob} <img src={UpDownArrow} width="14" />
                 </th>
                 <th>
-                  {t.doa}
-                  <img
-                    src={UpDownArrow}
-                    alt=""
-                    style={{ width: "14px", height: "14px" }}
-                  />
+                  {t.doa} <img src={UpDownArrow} width="14" />
                 </th>
                 <th>
-                  {t.class}
-                  <img
-                    src={UpDownArrow}
-                    alt=""
-                    style={{ width: "14px", height: "14px" }}
-                  />
+                  {t.class} <img src={UpDownArrow} width="14" />
                 </th>
                 <th className="text-center">{t.action}</th>
               </tr>
             </thead>
+
             <tbody>
-              
-                    {filteredStudents.map((student) => (
-
-                  <tr key={student.id} className="align-middle">
-                    <td className="text-start">
-                      {student.nameWithFathersname}
-                    </td>
-                    <td>{student.country}</td>
-                    <td>{formatDate(student.dateOfBirth)}</td>
-                    <td>{formatDate(student.dateOfAdmission)}</td>
-                    <td>{student.class}</td>
-
+              {currentStudents.map((student) => (
+                <tr key={student.id}>
+                  <td>{student.nameWithFathersname}</td>
+                  <td>{student.country}</td>
+                  <td>{formatDate(student.dateOfBirth)}</td>
+                  <td>{formatDate(student.dateOfAdmission)}</td>
+                  <td>{student.class}</td>
                   <td className="text-center">
-                    <div className="d-flex justify-content-center gap-2">
-                      <button className="btn btn-outline-primary btn-sm"
+                    <button
+                      className="btn btn-outline-primary btn-sm me-2"
                       onClick={() => handleEdit(student.id)}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-pencil-square"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
-                          <path
-                          //  fill-rule="evenodd"
-                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
-                          />
-                        </svg>
-                      </button>
-                      <button className="btn btn-outline-danger btn-sm"
-                       onClick={() => handleDelete(student.id)}
-                      
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-trash-fill"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
-                        </svg>
-                      </button>
-                    </div>
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      className="btn btn-outline-danger btn-sm"
+                      onClick={() => handleDelete(student.id)}
+                    >
+                      🗑️
+                    </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
+          {/* Pagination footer (design unchanged) */}
+          <div className="row p-0 m-0">
+            <div className="col pagination pt-4">
+              <p>
+                {t.show} : <input type="number" value="50" readOnly /> {t.enteries}{" "}
+                {startEntry} {t.to} {endEntry} {t.rowOutOf} <b>{totalRecords}</b>
+              </p>
+            </div>
+
+            <div className="col pt-3 text-end">
+              <ul className="pagination justify-content-end">
+                <li className={`page-item ${currentPage === 1 && "disabled"}`}>
+                  <button 
+                  style ={{borderRadius : "5px 0px 0px 5px"}}
+                    className="page-link"
+                    onClick={() => setCurrentPage(currentPage - 1)}
+                  >
+                    &laquo;
+                  </button>
+                </li>
+
+                {[...Array(totalPages)].map((_, i) => (
+                  <li
+                    key={i}
+                    className={`page-item ${currentPage === i + 1 && "active"}`}
+                  >
+                    <button
+                    style={{borderRadius: "0px"}}
+                      className="page-link"
+                      onClick={() => setCurrentPage(i + 1)}
+                    >
+                      {i + 1}
+                    </button>
+                  </li>
+                ))}
+
+                <li
+                  className={`page-item ${
+                    currentPage === totalPages && "disabled"
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                      style ={{borderRadius : "0px 5px 5px 0px"}}
+                    onClick={() => setCurrentPage(currentPage + 1)}
+                  >
+                    &raquo;
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="card"></div>
     </div>
   );
 };
