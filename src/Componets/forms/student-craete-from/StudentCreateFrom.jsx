@@ -18,7 +18,6 @@ const StudentCreateFrom = () => {
   const initialFormState = {
     nameWithFathersname: "",
     country: "",
-    watan: "",
     recordYear: "",
     studentStatus: "NEW",
     dateOfBirth: "",
@@ -27,7 +26,7 @@ const StudentCreateFrom = () => {
     class: "",
     classleavingDate: "",
     classAtLeaving: "",
-    resoneForLeaving: "",
+    reasoneForLeaving: "",
     dateofDigri: "",
     quality: "",
   };
@@ -43,7 +42,6 @@ const StudentCreateFrom = () => {
   const validateForm = () => {
     if (!formData.nameWithFathersname.trim()) return t.name + " is required";
     if (!formData.country.trim()) return t.country + " is required";
-    if (!formData.watan.trim()) return t.watanAddress + " is required";
     if (!formData.recordYear) return t.studentYearRecord + " is required";
     if (!formData.dateOfBirth) return t.dob + " is required";
     if (!formData.dateOfAdmission) return t.doa + " is required";
@@ -69,18 +67,17 @@ const StudentCreateFrom = () => {
     const payload = {
       NameWithFathersname: formData.nameWithFathersname,
       Country: formData.country,
-      Watan: formData.watan,
-      RecordYear: formData.recordYear,
-      StudentStatus: formData.studentStatus,
       DateOfBirth: formData.dateOfBirth,
-      DateOfAdmission: formData.dateOfAdmission,
       Ability: formData.ability || null,
+      DateOfAdmission: formData.dateOfAdmission,
       Class: formData.class,
       ClassleavingDate: formData.classleavingDate || null,
       ClassAtLeaving: formData.classAtLeaving || null,
-      ResoneForLeaving: formData.resoneForLeaving || null,
+      reasoneForLeaving: formData.reasoneForLeaving || null,
       DateofDigri: formData.dateofDigri || null,
-      Quality: formData.quality || null,
+      remark: formData.remark || null,
+      RecordYear: formData.recordYear,
+      StudentStatus: formData.studentStatus,
     };
 
     try {
@@ -141,7 +138,7 @@ const StudentCreateFrom = () => {
           {/* Name & Country */}
           <div className="row mt-3">
             <div className="col-md-6">
-              <Form.Label>{t.name} *</Form.Label>
+              <Form.Label>{t.nameWithFathersName} *</Form.Label>
               <Form.Control
                 name="nameWithFathersname"
                 value={formData.nameWithFathersname}
@@ -158,28 +155,7 @@ const StudentCreateFrom = () => {
             </div>
           </div>
 
-          {/* Watan & Record Year */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.watanAddress} *</Form.Label>
-              <Form.Control
-                name="watan"
-                value={formData.watan}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-6">
-              <Form.Label>{t.studentYearRecord} *</Form.Label>
-              <Form.Control
-                type="date"
-                name="recordYear"
-                value={formData.recordYear}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          {/* Dates */}
+          {/* Date of birth & Ability */}
           <div className="row mt-3">
             <div className="col-md-6">
               <Form.Label>{t.dob} *</Form.Label>
@@ -190,24 +166,24 @@ const StudentCreateFrom = () => {
                 onChange={handleChange}
               />
             </div>
+            <div className="col-md-6 col-sm-12">
+              <Form.Label>{t.ability}</Form.Label>
+              <Form.Control
+                name="ability"
+                value={formData.ability}
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          {/* Date Of Admission & Class */}
+          <div className="row mt-3">
             <div className="col-md-6">
               <Form.Label>{t.doa} *</Form.Label>
               <Form.Control
                 type="date"
                 name="dateOfAdmission"
                 value={formData.dateOfAdmission}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-
-          {/* Ability & Class */}
-          <div className="row mt-3">
-            <div className="col-md-6 col-sm-12">
-              <Form.Label>{t.ability}</Form.Label>
-              <Form.Control
-                name="ability"
-                value={formData.ability}
                 onChange={handleChange}
               />
             </div>
@@ -240,8 +216,16 @@ const StudentCreateFrom = () => {
               />
             </div>
           </div>
-          {/* Degree & Quality */}
+          {/*  reason for leaving & Degree */}
           <div className="row mt-3">
+            <div className="col-md-6">
+              <Form.Label>{t.reasoneForLeaving}</Form.Label>
+              <Form.Control
+                name="reasoneForLeaving"
+                value={formData.reasoneForLeaving}
+                onChange={handleChange}
+              />
+            </div>
             <div className="col-md-6 col-sm-12">
               <Form.Label>{t.degreeDate}</Form.Label>
               <Form.Control
@@ -251,36 +235,48 @@ const StudentCreateFrom = () => {
                 onChange={handleChange}
               />
             </div>
+          </div>
+          {/* status & remark*/}
+          <div className="row mt-3">
             <div className="col-md-6 col-sm-12">
               <Form.Label>{t.remark}</Form.Label>
               <Form.Control
-                name="quality"
-                value={formData.quality}
+                name="remark"
+                value={formData.remark}
                 onChange={handleChange}
               />
             </div>
-          </div>
-          {/* OLD / NEW */}
-          <div className="row mt-3">
             <div className="col-md-6">
-              <Form.Label>{t.studentStatus}</Form.Label>
-              <div className="d-flex gap-3">
-                <Form.Check
-                  type="radio"
-                  label={t.new}
-                  name="studentStatus"
-                  value="NEW"
-                  checked={formData.studentStatus === "NEW"}
-                  onChange={handleChange}
-                />
-                <Form.Check
-                  type="radio"
-                  label={t.old}
-                  name="studentStatus"
-                  value="OLD"
-                  checked={formData.studentStatus === "OLD"}
-                  onChange={handleChange}
-                />
+              <Form.Label>{t.studentYearRecord} *</Form.Label>
+              <Form.Control
+                type="date"
+                name="recordYear"
+                value={formData.recordYear}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="row mt-3">
+              <div className="col-md-6">
+                <Form.Label>{t.studentStatus}</Form.Label>
+                <div className="d-flex gap-3">
+                  <Form.Check
+                    type="radio"
+                    label={t.new}
+                    name="studentStatus"
+                    value="NEW"
+                    checked={formData.studentStatus === "NEW"}
+                    onChange={handleChange}
+                  />
+                  <Form.Check
+                    type="radio"
+                    label={t.old}
+                    name="studentStatus"
+                    value="OLD"
+                    checked={formData.studentStatus === "OLD"}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -294,7 +290,7 @@ const StudentCreateFrom = () => {
               {t.clear}
             </button>
             <button type="submit" className="btn btn-outline-primary">
-              {t.create}
+              {t.submit}
             </button>
           </div>
         </Form>

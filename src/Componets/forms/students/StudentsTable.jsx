@@ -22,7 +22,7 @@ const StudentsTable = () => {
 
   // 🔹 pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 50;
+  const rowsPerPage = 10;
 
   const navigate = useNavigate();
   const { language } = useLanguage();
@@ -138,7 +138,7 @@ const StudentsTable = () => {
             <thead className="bg-light">
               <tr>
                 <th>
-                  {t.name} <img src={UpDownArrow} width="14" />
+                  {t.nameWithFathersName} <img src={UpDownArrow} width="14" />
                 </th>
                 <th>
                   {t.country} <img src={UpDownArrow} width="14" />
@@ -187,7 +187,7 @@ const StudentsTable = () => {
           <div className="row p-0 m-0">
             <div className="col pagination pt-4">
               <p>
-                {t.show} : <input type="number" value="50" readOnly /> {t.enteries}{" "}
+                {t.show} : <input type="number" value={rowsPerPage} readOnly /> {t.enteries}{" "}
                 {startEntry} {t.to} {endEntry} {t.rowOutOf} <b>{totalRecords}</b>
               </p>
             </div>

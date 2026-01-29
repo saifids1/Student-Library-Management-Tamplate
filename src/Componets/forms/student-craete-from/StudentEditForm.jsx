@@ -18,7 +18,6 @@ const StudentEditForm = () => {
   const [formData, setFormData] = useState({
     nameWithFathersname: "",
     country: "",
-    watan: "",
     recordYear: "",
     studentStatus: "NEW",
     dateOfBirth: "",
@@ -27,7 +26,7 @@ const StudentEditForm = () => {
     class: "",
     classleavingDate: "",
     classAtLeaving: "",
-    resoneForLeaving: "",
+    reasoneForLeaving: "",
     dateofDigri: "",
     quality: "",
   });
@@ -42,7 +41,6 @@ const StudentEditForm = () => {
         setFormData({
           nameWithFathersname: data.nameWithFathersname || "",
           country: data.country || "",
-          watan: data.watan || "",
           recordYear: data.recordYear || "",
           studentStatus: data.studentStatus || "NEW",
           dateOfBirth: data.dateOfBirth?.split("T")[0] || "",
@@ -51,12 +49,11 @@ const StudentEditForm = () => {
           class: data.class || "",
           classleavingDate: data.classleavingDate?.split("T")[0] || "",
           classAtLeaving: data.classAtLeaving || "",
-          resoneForLeaving: data.resoneForLeaving || "",
+          reasoneForLeaving: data.reasoneForLeaving || "",
           dateofDigri: data.dateofDigri?.split("T")[0] || "",
           quality: data.quality || "",
         });
-      } catch (error) {
-        console.error("Fetch Error:", error);
+      } catch {
         Swal.fire("Error", "Failed to load student data", "error");
       }
     };
@@ -67,36 +64,18 @@ const StudentEditForm = () => {
   /* ================= HANDLE CHANGE ================= */
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  /* ================= UPDATE STUDENT ================= */
+  /* ================= UPDATE ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const payload = {
-      id: Number(id),
-      nameWithFathersname: formData.nameWithFathersname,
-      country: formData.country,
-      watan: formData.watan,
-      recordYear: formData.recordYear,
-      studentStatus: formData.studentStatus,
-      dateOfBirth: formData.dateOfBirth,
-      dateOfAdmission: formData.dateOfAdmission,
-      ability: formData.ability || null,
-      class: formData.class,
-      classleavingDate: formData.classleavingDate || null,
-      classAtLeaving: formData.classAtLeaving || null,
-      resoneForLeaving: formData.resoneForLeaving || null,
-      dateofDigri: formData.dateofDigri || null,
-      quality: formData.quality || null,
-    };
-
     try {
-      await axios.put(`${API_URL}/${id}`, payload);
+      await axios.put(`${API_URL}/${id}`, {
+        ...formData,
+        id: Number(id),
+      });
 
       Swal.fire({
         icon: "success",
@@ -107,8 +86,7 @@ const StudentEditForm = () => {
       });
 
       navigate("/layout/students-table");
-    } catch (error) {
-      console.error("Update Error:", error.response?.data);
+    } catch {
       Swal.fire("Error", "Update failed", "error");
     }
   };
@@ -117,182 +95,181 @@ const StudentEditForm = () => {
     <div className="studentCreateFrom">
       <div className="heading d-flex bg-primary text-white rounded mb-2">
         <div className="w-25">
-          <Link
-            to="/layout/students-table"
-            className="text-gray-800 px-6 py-2 mb-10 rounded-lg no-underline"
-          >
-            <button type="reset" className="btn btn-primary">
-              <span style={{ letterSpacing: "-4px", marginRight: "6px" }}>
-                {"<< "}
-              </span>
-              {t.back}
+          <Link to="/layout/students-table">
+            <button type="button" className="btn btn-primary">
+              {"<< "} {t.back}
             </button>
           </Link>
         </div>
         <div className="text-center w-50 fw-bold pt-2">
           <p>{t.editStudentFrom}</p>
         </div>
-        <div className="w-25"></div>
       </div>
-      <div className="form-div">
-        <Form onSubmit={handleSubmit}>
-          <Form.Text className="text-muted">{t.EditStudent}</Form.Text>
-          {/* Name & Country */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.name} *</Form.Label>
-              <Form.Control
-                name="nameWithFathersname"
-                value={formData.nameWithFathersname}
+
+      <Form onSubmit={handleSubmit}>
+        {/* Name & Country */}
+        <div className="row mt-3">
+          <div className="col-md-6">
+            <Form.Label>{t.nameWithFathersName} *</Form.Label>
+            <Form.Control
+              name="nameWithFathersname"
+              value={formData.nameWithFathersname}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="col-md-6">
+            <Form.Label>{t.country} *</Form.Label>
+            <Form.Control
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        {/* Dates */}
+        <div className="row mt-3">
+          <div className="col-md-6">
+            <Form.Label>{t.dob} *</Form.Label>
+            <Form.Control
+              type="date"
+              name="dateOfBirth"
+              value={formData.dateOfBirth}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="col-md-6">
+            <Form.Label>{t.ability}</Form.Label>
+            <Form.Control
+              name="ability"
+              value={formData.ability}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        {/* date of admission and class */}
+        <div className="row mt-3">
+          <div className="col-md-6">
+            <Form.Label>{t.doa} *</Form.Label>
+            <Form.Control
+              type="date"
+              name="dateOfAdmission"
+              value={formData.dateOfAdmission}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="col-md-6">
+            <Form.Label>{t.class} *</Form.Label>
+            <Form.Control
+              name="class"
+              value={formData.class}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+        {/* Leaving Details */}
+        <div className="row mt-3">
+          <div className="col-md-6">
+            <Form.Label>{t.leavingDate}</Form.Label>
+            <Form.Control
+              type="date"
+              name="classleavingDate"
+              value={formData.classleavingDate}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <Form.Label>{t.classAtTimeOfLeaving}</Form.Label>
+            <Form.Control
+              name="classAtLeaving"
+              value={formData.classAtLeaving}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+
+        {/* reasone for leaving & degree date */}
+        <div className="row mt-3">
+          <div className="col-md-6">
+            <Form.Label>{t.reasoneForLeaving}</Form.Label>
+            <Form.Control
+              name="quality"
+              value={formData.reasoneForLeaving}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-md-6">
+            <Form.Label>{t.degreeDate}</Form.Label>
+            <Form.Control
+              type="date"
+              name="dateofDigri"
+              value={formData.dateofDigri}
+              onChange={handleChange}
+            />
+          </div>
+        </div>
+        <div className="row mt-3">
+          <div className="col-md-6">
+            <Form.Label>{t.remark}</Form.Label>
+            <Form.Control
+              name="quality"
+              value={formData.quality}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-md-6">
+            <Form.Label>{t.studentYearRecord} *</Form.Label>
+            <Form.Control
+              type="number"
+              name="recordYear"
+              value={formData.recordYear}
+              onChange={handleChange}
+              required
+            />
+          </div>
+        </div>
+
+        {/* Student Status */}
+        <div className="row mt-3">
+          <div className="col-md-6">
+            <Form.Label>{t.studentStatus} *</Form.Label>
+            <div className="d-flex gap-3">
+              <Form.Check
+                type="radio"
+                label={t.new}
+                name="studentStatus"
+                value="NEW"
+                checked={formData.studentStatus === "NEW"}
+                onChange={handleChange}
+                required
+              />
+              <Form.Check
+                type="radio"
+                label={t.old}
+                name="studentStatus"
+                value="OLD"
+                checked={formData.studentStatus === "OLD"}
                 onChange={handleChange}
                 required
               />
             </div>
-            <div className="col-md-6">
-              <Form.Label>{t.country}</Form.Label>
-              <Form.Control
-                name="country"
-                value={formData.country}
-                onChange={handleChange}
-                required
-              />
-            </div>
           </div>
-          {/* Watan & Record Year */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.watanAddress}</Form.Label>
-              <Form.Control
-                name="watan"
-                value={formData.watan}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-6">
-              <Form.Label>{t.studentYearRecord}</Form.Label>
-              <Form.Control
-                type="number"
-                name="recordYear"
-                value={formData.recordYear}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          {/* Dates */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.dob}</Form.Label>
-              <Form.Control
-                type="date"
-                name="dateOfBirth"
-                value={formData.dateOfBirth}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="col-md-6">
-              <Form.Label>{t.doa}</Form.Label>
-              <Form.Control
-                type="date"
-                name="dateOfAdmission"
-                value={formData.dateOfAdmission}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-          {/* Ability & Class */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.ability}</Form.Label>
-              <Form.Control
-                name="ability"
-                value={formData.ability}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-6">
-              <Form.Label>{t.class}</Form.Label>
-              <Form.Control
-                name="class"
-                value={formData.class}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-          {/* Leaving Details */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.leavingDate}</Form.Label>
-              <Form.Control
-                type="date"
-                name="classleavingDate"
-                value={formData.classleavingDate}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-6">
-              <Form.Label>{t.classAtTimeOfLeaving}</Form.Label>
-              <Form.Control
-                name="classAtLeaving"
-                value={formData.classAtLeaving}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          {/* Degree & Quality */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.degreeDate}</Form.Label>
-              <Form.Control
-                type="date"
-                name="dateofDigri"
-                value={formData.dateofDigri}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-6">
-              <Form.Label>{t.quality}</Form.Label>
-              <Form.Control
-                name="quality"
-                value={formData.quality}
-                onChange={handleChange}
-              />
-            </div>
-          </div>
-          {/* OLD / NEW */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.studentStatus}</Form.Label>
-              <div className="d-flex gap-3">
-                <Form.Check
-                  type="radio"
-                  label={t.new}
-                  name="studentStatus"
-                  value="NEW"
-                  checked={formData.studentStatus === "NEW"}
-                  onChange={handleChange}
-                />
-                <Form.Check
-                  type="radio"
-                  label={t.old}
-                  name="studentStatus"
-                  value="OLD"
-                  checked={formData.studentStatus === "OLD"}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-          </div>
-          {/* Buttons */}
-          <div className="form-buttons text-end mt-4">
-            <button type="submit" className="btn btn-outline-primary">
-              {t.create}
-            </button>
-          </div>
-        </Form>
-      </div>
+        </div>
+
+        {/* Submit */}
+        <div className="form-buttons text-end mt-4">
+          <button type="submit" className="btn btn-outline-primary">
+            {t.update}
+          </button>
+        </div>
+      </Form>
     </div>
   );
 };

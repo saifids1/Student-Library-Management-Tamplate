@@ -2,14 +2,14 @@ export const studentFormText = {
   en: {
     title: "Create Student",
     required: "Required Fields *",
-    name: "Name with Father's Name",
+    nameWithFathersName: "Name with Father's Name",
     country: "Country",
     dob: "Date of Birth",
     doa: "Date of Admission",
     ability: "Ability",
     class: "Class",
     leavingDate: "Class Leaving Date",
-    reason: "Reason for Leaving",
+    reasoneForLeaving: "Reason for Leaving",
     degreeDate: "Date of Degree",
     remark: "Remark",
     create: "Submit",
@@ -34,20 +34,22 @@ export const studentFormText = {
     old: "OLD",
     new: "NEW",
     createStudentForm: "Student Create Form",
-    editStudentFrom: "Edit Student From"
+    editStudentFrom: "Edit Student From",
+    update: "Update",
+    submit: "Submit"
   },
   ur: {
     title: "طالب علم بنائیں",
     required: "مطلوبہ فیلڈز *",
-    name: "نام مع ولدیت",
-    country: "ملک",
+    nameWithFathersName: "نام مع ولدیت",
+    country: "وطن",
     dob: "تاریخ پیدائش",
     doa: "تاریخ داخلہ",
     ability: "قابلیت",
-    class: "جماعت",
-    leavingDate: "تاریخ رخصت",
-    reason: "وجہ",
-    degreeDate: "تاریخ ڈگری",
+    class: "کلاس داخلہ",
+    leavingDate: "تاریخِ خارجہ",
+    reasone: "وجہ",
+    degreeDate: "تاریخِ سند",
     remark: "کیفیت",
     create: "تخلیق کریں",
     back: "واپس",
@@ -62,7 +64,8 @@ export const studentFormText = {
     watanAddress: "وطن / پتہ",
     studentYearRecord: "طالب علم کا سالانہ ریکارڈ",
     studentStatus: "طالب علم کی حیثیت",
-    classAtTimeOfLeaving: "چھوڑتے وقت کی جماعت",
+    classAtTimeOfLeaving: "کلاس وقتِ خارجہ",
+    reasoneForLeaving : "وجۂ خارجہ",
     clear: "خالی کریں",
     show: "دکھائیں",
     enteries: "تک، کل قطاریں",
@@ -73,11 +76,7 @@ export const studentFormText = {
     createStudentForm: "طالب علم کا اندراج فارم",
     editStudentFrom: "طالب علم میں ترمیم کا فارم",
     WebsiteName: "جامعہ اسلامیہ کاشف العلوم – اورنگ آباد، مہاراشٹر",
-
-
-
-
-
-
+    update: "تجدید کریں",
+    submit: "ارسال کریں"
   }
 };
