@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  margin: 0;
+  padding: 0;
+}
 .row,
 .col {
   padding: 0;
@@ -14,4 +18,19 @@
 .col-md-9{
   padding: 0 !important;
   margin: 0;
+}
+
+.container-fluid{
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100%;
+}
+
+.left-side{
+  width: 20%;
+  border-right: 1px solid gainsboro;
+}
+
+.right-side{
+  width: 80%;
 }

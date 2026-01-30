@@ -6,7 +6,7 @@ import { useLanguage } from "../../../context/LanguageContext";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { studentFormText } from "../../../i18n/studentForm";
-import backArrow from "../../../assets/svg/chevron.png"
+import backArrow from "../../../assets/svg/chevron.png";
 
 const API_URL = "https://localhost:7000/api/Student";
 
@@ -68,9 +68,30 @@ const StudentEditForm = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  /* ================= VALIDATION ================= */
+  const validateForm = () => {
+    if (!formData.nameWithFathersname.trim()) return t.name + " is required";
+    if (!formData.country.trim()) return t.country + " is required";
+    if (!formData.dateOfBirth) return t.dob + " is required";
+    if (!formData.dateOfAdmission) return t.doa + " is required";
+    if (!formData.class.trim()) return t.class + " is required";
+    if (!formData.studentStatus.trim()) return t.studentStatus + " is required";
+
+    return null;
+  };
+
   /* ================= UPDATE ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const errorMessage = validateForm();
+    if (errorMessage) {
+      Swal.fire({
+        icon: "warning",
+        title: "Required Field",
+        text: errorMessage,
+      });
+      return;
+    }
 
     try {
       await axios.put(`${API_URL}/${id}`, {
@@ -98,7 +119,18 @@ const StudentEditForm = () => {
         <div className="w-25">
           <Link to="/layout/students-table">
             <button type="button" className="btn btn-primary">
-              <span><img src={backArrow} alt="" style={{width: "12px", height : "12px" , paddingBottom : "2px"}} /></span> {t.back}
+              <span>
+                <img
+                  src={backArrow}
+                  alt=""
+                  style={{
+                    width: "12px",
+                    height: "12px",
+                    paddingBottom: "2px",
+                  }}
+                />
+              </span>{" "}
+              {t.back}
             </button>
           </Link>
         </div>
@@ -116,7 +148,6 @@ const StudentEditForm = () => {
                 name="nameWithFathersname"
                 value={formData.nameWithFathersname}
                 onChange={handleChange}
-                required
               />
             </div>
             <div className="col-md-6">
@@ -125,7 +156,6 @@ const StudentEditForm = () => {
                 name="country"
                 value={formData.country}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
@@ -138,7 +168,6 @@ const StudentEditForm = () => {
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
                 onChange={handleChange}
-                required
               />
             </div>
             <div className="col-md-6">
@@ -159,7 +188,6 @@ const StudentEditForm = () => {
                 name="dateOfAdmission"
                 value={formData.dateOfAdmission}
                 onChange={handleChange}
-                required
               />
             </div>
             <div className="col-md-6">
@@ -168,7 +196,6 @@ const StudentEditForm = () => {
                 name="class"
                 value={formData.class}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
@@ -181,7 +208,6 @@ const StudentEditForm = () => {
                 name="classleavingDate"
                 value={formData.classleavingDate}
                 onChange={handleChange}
-                required
               />
             </div>
             <div className="col-md-6">
@@ -190,7 +216,6 @@ const StudentEditForm = () => {
                 name="classAtLeaving"
                 value={formData.classAtLeaving}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
@@ -211,7 +236,6 @@ const StudentEditForm = () => {
                 name="dateofDigri"
                 value={formData.dateofDigri}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
@@ -231,7 +255,6 @@ const StudentEditForm = () => {
                 name="recordYear"
                 value={formData.recordYear}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
@@ -247,7 +270,6 @@ const StudentEditForm = () => {
                   value="NEW"
                   checked={formData.studentStatus === "NEW"}
                   onChange={handleChange}
-                  required
                 />
                 <Form.Check
                   type="radio"
@@ -256,7 +278,6 @@ const StudentEditForm = () => {
                   value="OLD"
                   checked={formData.studentStatus === "OLD"}
                   onChange={handleChange}
-                  required
                 />
               </div>
             </div>

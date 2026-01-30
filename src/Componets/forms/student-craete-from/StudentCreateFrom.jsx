@@ -43,11 +43,9 @@ const StudentCreateFrom = () => {
   const validateForm = () => {
     if (!formData.nameWithFathersname.trim()) return t.name + " is required";
     if (!formData.country.trim()) return t.country + " is required";
-    if (!formData.recordYear) return t.studentYearRecord + " is required";
     if (!formData.dateOfBirth) return t.dob + " is required";
     if (!formData.dateOfAdmission) return t.doa + " is required";
     if (!formData.class.trim()) return t.class + " is required";
-    if (!formData.dateofDigri.trim()) return t.degreeDate + " is required";
     if (!formData.studentStatus.trim()) return t.studentStatus + " is required";
 
     return null;

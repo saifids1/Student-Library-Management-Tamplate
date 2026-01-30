@@ -102,7 +102,7 @@ const StudentsTable = () => {
       <div className="container-fluid px-4 py-3">
         {/* Header */}
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <div className="w-45">
+          <div className="w-20">
             <h5 className="fw-semibold">{t.StudentsList}</h5>
           </div>
 
@@ -111,7 +111,7 @@ const StudentsTable = () => {
               <span className="fw-semibold">{t.Search}</span>
               <input
                 type="text"
-                className="form-control form-control-sm w-64 search-bar"
+                className="form-control form-control-sm w-65 search-bar"
                 placeholder={`${t.searchBy} ${t.name}, ${t.country}, ${t.class}`}
                 value={searchTerm}
                 onChange={(e) => {

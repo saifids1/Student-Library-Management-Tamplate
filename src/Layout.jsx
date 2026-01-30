@@ -9,11 +9,11 @@ const Layout = () => {
   return (
     <div className='flex flex-col  overflow-x-hidden "overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"'>
       <Header />
-      <div className="row">
-        <div className="col-md-3 border">
+      <div className="container-fluid w-100 d-flex">
+        <div className="left-side">
           <Sidebar />
         </div>
-        <div className="col-md-9">
+        <div className="right-side">
           <main className=" overflow-x-hidden">
             <Outlet />
           </main>
