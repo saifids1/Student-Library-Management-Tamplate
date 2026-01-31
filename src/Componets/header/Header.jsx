@@ -1,11 +1,7 @@
-import Bars from "../../assets/dasdhboard/bars.svg";
-import Avatar from "../../assets/dasdhboard/avatar.webp";
-import ChevronDown from "../../assets/dasdhboard/chevron-down.svg";
 import "../header/Header.css";
 
 import { useLanguage } from "../../context/LanguageContext";
 import { studentFormText } from "../../i18n/studentForm";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Header = () => {

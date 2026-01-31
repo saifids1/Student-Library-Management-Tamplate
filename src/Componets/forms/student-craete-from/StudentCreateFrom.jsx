@@ -24,7 +24,7 @@ const StudentCreateFrom = () => {
     dateOfBirth: "",
     dateOfAdmission: "",
     ability: "",
-    class: "",
+    studentClass: "",
     classleavingDate: "",
     classAtLeaving: "",
     reasoneForLeaving: "",
@@ -114,8 +114,9 @@ const StudentCreateFrom = () => {
   };
 
   return (
-    <div className="studentCreateFrom pl-2">
-      <div className="heading d-flex bg-primary text-white rounded mb-1">
+    <div className="container-fluid p-2">
+      {/* Header */}
+      <div className="d-flex align-items-center bg-primary text-white rounded mb-2">
         <div className="w-25">
           <Link
             to="/layout/students-table"
@@ -137,9 +138,11 @@ const StudentCreateFrom = () => {
             </button>
           </Link>
         </div>
-        <div className="text-center w-50 fw-bold pt-2">
-          <p>{t.createStudentForm}</p>
+
+        <div className="w-50 text-center fw-bold pt-2">
+          <p className="mb-0">{t.createStudentForm}</p>
         </div>
+
         <div className="w-25"></div>
       </div>
       <div className="form-div">
@@ -200,6 +203,7 @@ const StudentCreateFrom = () => {
               />
             </div>
           </div>
+        </div>
 
           {/* Date Of Admission & Class */}
           <div className="row mt-3">
@@ -259,6 +263,7 @@ const StudentCreateFrom = () => {
                 value={formData.dateofDigri}
                 onChange={handleChange}
               />
+              <label className="form-check-label" style={{ textDecoration: "none", color: "black" }}>{t.new}</label>
             </div>
           </div>
           {/* status & remark*/}
@@ -270,6 +275,7 @@ const StudentCreateFrom = () => {
                 value={formData.remark}
                 onChange={handleChange}
               />
+              <label className="form-check-label" style={{ textDecoration: "none", color: "black" }}>{t.old}</label>
             </div>
             <div className="col-md-6">
               <Form.Label>{t.studentYearRecord}*</Form.Label>

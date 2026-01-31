@@ -7,58 +7,44 @@ const Sidebar = () => {
   const { language } = useLanguage();
   const t = studentFormText[language];
 
+  const menuItems = [
+    {
+      path: "/layout/student-create-form",
+      label: t.StudentCreateFrom,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 0a3 3 0 0 1 3 3v1h1a2 2 0 0 1 2 2v7a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V6a2 2 0 0 1 2-2h1V3a3 3 0 0 1 3-3z"/>
+        </svg>
+      ),
+    },
+    {
+      path: "/layout/students-table",
+      label: t.StudentsTable,
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm2 1v2h12V3H2zm0 3v2h12V6H2zm0 3v2h12V9H2z"/>
+        </svg>
+      ),
+    },
+  ];
+
   return (
     <div className="sidebar">
-      <ul>
-        {/* Create Student */}
-        <li>
-          <NavLink
-            to="/layout/student-create-form"
-            style={{ width: "100%", display: "inline-block" }}
-            className={({ isActive }) =>
-              `text-gray-800 px-6 py-2 mb-10 rounded-lg no-underline ${
-                isActive ? "active" : ""
-              }`
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-              style={{ marginRight: "8px" }}
+      <ul className="sidebar-menu" >
+        {menuItems.map((item, index) => (
+          <li key={index}>
+            <NavLink
+            style={{border:"0.5px solid #00000030"}}
+              to={item.path}
+              className={({ isActive }) =>
+                `sidebar-link ${isActive ? "active" : ""}`
+              }
             >
-              <path d="M7.646.146a.5.5 0 0 1 .708 0L10.207 2H14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3.793zM1 7v3h14V7zm14-1V4a1 1 0 0 0-1-1h-3.793a1 1 0 0 1-.707-.293L8 1.207l-1.5 1.5A1 1 0 0 1 5.793 3H2a1 1 0 0 0-1 1v2zm0 5H1v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
-            </svg>
-            {t.StudentCreateFrom}
-          </NavLink>
-        </li>
-
-        {/* Students Table */}
-        <li>
-          <NavLink
-            to="/layout/students-table"
-            style={{ width: "100%", display: "inline-block" }}
-            className={({ isActive }) =>
-              `text-gray-800 px-6 py-2 mb-10 rounded-lg no-underline ${
-                isActive ? "active" : ""
-              }`
-            }
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              viewBox="0 0 16 16"
-              style={{ marginRight: "8px" }}
-            >
-              <path d="M7.646.146a.5.5 0 0 1 .708 0L10.207 2H14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h3.793zM1 7v3h14V7zm14-1V4a1 1 0 0 0-1-1h-3.793a1 1 0 0 1-.707-.293L8 1.207l-1.5 1.5A1 1 0 0 1 5.793 3H2a1 1 0 0 0-1 1v2zm0 5H1v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1z" />
-            </svg>
-            {t.StudentsTable}
-          </NavLink>
-        </li>
+              <span className="icon">{item.icon}</span>
+              <span className="text">{item.label}</span>
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </div>
   );

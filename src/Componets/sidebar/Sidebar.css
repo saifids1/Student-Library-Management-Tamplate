@@ -1,13 +1,17 @@
+/* Sidebar container */
 .sidebar {
-  width: 100%;
-  height: 90vh;
-  text-align: start;
-  color: gainsboro;
+  width: 280px;
+  height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding-top: 1rem;
+  padding-left: 0.rem;
 }
 
-.sidebar ul {
-  list-style-type: none; /* Removes bullets */
-  padding: 0; /* Removes default padding */
+/* Menu */
+.sidebar-menu {
+  list-style: none;
+  padding: 0;
   margin: 0;
 }
 
@@ -19,28 +23,51 @@
   /* padding: 5px; */
   margin-block: 8px;
   border-radius: 10px;
-  cursor: pointer;
-}
-
-.sidebar ul li:hover a {
-  border-radius: 10px;
-  color: white;
-  background-color: #0d6efd;
-}
-
-.sidebar a.active {
-  border-radius: 10px;
-  background-color: #0d6efd;
-  color: #fff !important;
-}
-
-.sidebar ul li a {
-  padding: 5px;
+  color: #374151;
   text-decoration: none;
-  color: gray;
+  transition: all 0.3s ease;
+  font-weight: 500;
 }
 
-.sidebar ul li a svg {
-  margin-inline: 5px;
-  margin-bottom: 3px;
+/* Hover effect */
+.sidebar-link:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* Active state */
+.sidebar-link.active {
+  background: #0d6efd;
+  color: #ffffff;
+}
+
+/* Icon animation */
+.sidebar-link .icon {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+/* Flip icon left → right on hover */
+.sidebar-link:hover .icon {
+  transform: rotateY(180deg);
+}
+
+/* Text */
+.sidebar-link .text {
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 70px;
+  }
+
+  .sidebar-link {
+    justify-content: center;
+  }
+
+  .sidebar-link .text {
+    display: none;
+  }
 }

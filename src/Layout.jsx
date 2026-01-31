@@ -20,6 +20,9 @@ const Layout = () => {
         </div>
       </div>
     </div>
+  </div>
+</div>
+
   );
 };
 

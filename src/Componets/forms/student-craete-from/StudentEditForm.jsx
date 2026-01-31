@@ -30,6 +30,7 @@ const StudentEditForm = () => {
     reasoneForLeaving: "",
     dateofDigri: "",
     quality: "",
+    studentStatus: 1,
   });
 
   /* ================= FETCH STUDENT ================= */
@@ -41,6 +42,7 @@ const StudentEditForm = () => {
 
         setFormData({
           nameWithFathersname: data.nameWithFathersname || "",
+          address: data.address || "",
           country: data.country || "",
           recordYear: data.recordYear || "",
           studentStatus: data.studentStatus || "NEW",
@@ -92,6 +94,7 @@ const StudentEditForm = () => {
       });
       return;
     }
+
 
     try {
       await axios.put(`${API_URL}/${id}`, {
@@ -147,9 +150,11 @@ const StudentEditForm = () => {
               <Form.Control
                 name="nameWithFathersname"
                 value={formData.nameWithFathersname}
+                placeholder="Enter full name"
                 onChange={handleChange}
               />
             </div>
+
             <div className="col-md-6">
               <Form.Label>{t.country}*</Form.Label>
               <Form.Control
@@ -165,11 +170,13 @@ const StudentEditForm = () => {
               <Form.Label>{t.dob}*</Form.Label>
               <Form.Control
                 type="date"
+                className="form-control"
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
                 onChange={handleChange}
               />
             </div>
+
             <div className="col-md-6">
               <Form.Label>{t.ability}</Form.Label>
               <Form.Control
@@ -178,6 +185,8 @@ const StudentEditForm = () => {
                 onChange={handleChange}
               />
             </div>
+
+
           </div>
           {/* date of admission and class */}
           <div className="row mt-3">
@@ -190,32 +199,64 @@ const StudentEditForm = () => {
                 onChange={handleChange}
               />
             </div>
+
             <div className="col-md-6">
               <Form.Label>{t.class}*</Form.Label>
               <Form.Control
                 name="class"
                 value={formData.class}
+                placeholder="Enter class"
                 onChange={handleChange}
               />
             </div>
           </div>
-          {/* Leaving Details */}
-          <div className="row mt-3">
+
+          {/* Row 4 */}
+          <div className="row g-3 mt-2">
             <div className="col-md-6">
               <Form.Label>{t.leavingDate}*</Form.Label>
               <Form.Control
                 type="date"
+                className="form-control"
                 name="classleavingDate"
                 value={formData.classleavingDate}
                 onChange={handleChange}
               />
             </div>
+
+            <div className="col-md-6">
+              <label className="form-label">{t.resoneForLeaving}</label>
+              <input
+                className="form-control"
+                name="resoneForLeaving"
+                value={formData.resoneForLeaving}
+                placeholder="Reason for leaving"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+
+          {/* Row 5 */}
+          <div className="row g-3 mt-2">
+            <div className="col-md-6">
+              <label className="form-label">{t.classAtTimeOfLeaving} *</label>
+              <input
+                className="form-control"
+                name="classLeavingTime"
+                value={formData.classLeavingTime}
+                placeholder="Class at time of leaving"
+                onChange={handleChange}
+                required
+              />
+            </div>
+
             <div className="col-md-6">
               <Form.Label>{t.classAtTimeOfLeaving}*</Form.Label>
               <Form.Control
                 name="classAtLeaving"
                 value={formData.classAtLeaving}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -233,6 +274,7 @@ const StudentEditForm = () => {
               <Form.Label>{t.degreeDate}*</Form.Label>
               <Form.Control
                 type="date"
+                className="form-control"
                 name="dateofDigri"
                 value={formData.dateofDigri}
                 onChange={handleChange}
@@ -245,6 +287,7 @@ const StudentEditForm = () => {
               <Form.Control
                 name="quality"
                 value={formData.quality}
+                placeholder="Any remarks"
                 onChange={handleChange}
               />
             </div>
@@ -265,20 +308,26 @@ const StudentEditForm = () => {
               <div className="d-flex gap-3">
                 <Form.Check
                   type="radio"
-                  label={t.new}
                   name="studentStatus"
-                  value="NEW"
-                  checked={formData.studentStatus === "NEW"}
-                  onChange={handleChange}
+                  checked={formData.studentStatus === 1}
+                  onChange={() =>
+                    setFormData((p) => ({ ...p, studentStatus: 1 }))
+                  }
                 />
-                <Form.Check
+                <label className="form-check-label" style={{ textDecoration: "none", color: "black" }}>{t.new}</label>
+              </div>
+
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
                   type="radio"
-                  label={t.old}
                   name="studentStatus"
-                  value="OLD"
-                  checked={formData.studentStatus === "OLD"}
-                  onChange={handleChange}
+                  checked={formData.studentStatus === 2}
+                  onChange={() =>
+                    setFormData((p) => ({ ...p, studentStatus: 2 }))
+                  }
                 />
+                <label className="form-check-label" style={{ textDecoration: "none", color: "black" }}>{t.old}</label>
               </div>
             </div>
           </div>
@@ -288,7 +337,9 @@ const StudentEditForm = () => {
               {t.update}
             </button>
           </div>
-        </Form>
+
+        </form>
+
       </div>
     </div>
   );

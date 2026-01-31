@@ -1,15 +1,15 @@
-header{
-    padding: 6px;
-    border: 1px solid gainsboro;
-}
-
 .app-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 !important;
-  background-color: #fff;
-  border-bottom: 1px solid gainsboro;
+
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 /* LEFT */
@@ -36,6 +36,7 @@ header{
 .header-title {
   margin: 0;
   font-weight: 600;
+  color: #1f2937;
 }
 
 /* RIGHT */
@@ -51,16 +52,90 @@ header{
   font-size: 14px !important;
 }
 
-.menu-icon {
-  cursor: pointer;
+.lang-btn {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+/* ========================== */
+/* Avatar & Hover Dropdown   */
+/* ========================== */
+
+.profile-wrapper {
+  position: relative;
 }
 
 .user-avatar {
-  border: 2px solid #ddd;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #e5e7eb;
 }
 
-/* Dropdown fix */
+/* Dropdown hidden by default */
 .dropdown-menu {
+  position: absolute;
   right: 0;
-  left: auto;
+  top: 43px;
+
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  min-width: 160px;
+  padding: 6px 0;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  display: none;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* SHOW ON HOVER */
+.profile-wrapper:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item-custom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.dropdown-item-custom:hover {
+  background-color: #f3f4f6;
+}
+
+/* Smooth animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================== */
+/* 📱 Responsive Styles */
+/* ===================== */
+@media (max-width: 768px) {
+  .header-center {
+    display: none;
+  }
+
+  .lang-btn {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+  }
 }

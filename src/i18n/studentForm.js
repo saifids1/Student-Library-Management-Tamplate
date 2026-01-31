@@ -94,3 +94,4 @@ export const studentFormText = {
     WebsiteName: "جامعہ اسلامیہ کاشف العلوم – اورنگ آباد، مہاراشٹر",
   }
 };
+
