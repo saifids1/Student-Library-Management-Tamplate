@@ -1,5 +1,5 @@
 import "../header/Header.css";
-
+import { useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { studentFormText } from "../../i18n/studentForm";
 import { useNavigate } from "react-router-dom";
@@ -52,7 +52,8 @@ const Header = () => {
 
         <div className="dropdown">
           <img
-            src={Avatar}
+            src="#
+            "
             width="45"
             height="45"
             className="rounded-circle user-avatar"

@@ -203,7 +203,7 @@ const StudentCreateFrom = () => {
               />
             </div>
           </div>
-        </div>
+        
 
           {/* Date Of Admission & Class */}
           <div className="row mt-3">

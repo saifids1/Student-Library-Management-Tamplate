@@ -338,7 +338,7 @@ const StudentEditForm = () => {
             </button>
           </div>
 
-        </form>
+        </Form>
 
       </div>
     </div>
