@@ -9,9 +9,6 @@ import "./App.css";
 import Layout from "./Layout";
 import Dashboard from "./Componets/dashboard/Dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
 import StudentCreateFrom from "./Componets/forms/student-craete-from/StudentCreateFrom";
 import StudentsTable from "./Componets/forms/students/StudentsTable";
 import StudentEditForm from "./Componets/forms/student-craete-from/StudentEditForm";
@@ -20,7 +17,7 @@ import { LanguageProvider } from "./context/LanguageContext";
 import Login from "./Componets/Login/Login";
 import ProtectedRoute from "./Componets/Login/ProtectedRoute";
 // src/App.js
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 // ... rest of your App
 
 function App() {
@@ -75,8 +72,8 @@ function App() {
             }
           />
         </Route>
-      </>
-    )
+      </>,
+    ),
   );
 
   return (

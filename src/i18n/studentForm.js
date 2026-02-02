@@ -42,7 +42,7 @@ export const studentFormText = {
     to: "to",
     title: "Create Student",
     update: "Update",
-    watanAddress: "Watan / Address",
+    watanAddress: "Country / Address",
     WebsiteName: "Jamia Islamia Kashiful Uloom - Aurangabad Maharashtra",
   },
   ur: {
@@ -94,4 +94,3 @@ export const studentFormText = {
     WebsiteName: "جامعہ اسلامیہ کاشف العلوم – اورنگ آباد، مہاراشٹر",
   }
 };
-

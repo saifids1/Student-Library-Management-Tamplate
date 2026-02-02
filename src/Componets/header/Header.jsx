@@ -3,10 +3,11 @@ import { useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { studentFormText } from "../../i18n/studentForm";
 import { useNavigate } from "react-router-dom";
+import Avatar from "../../assets/dasdhboard/avatar.webp"
 
 const Header = () => {
-  const [students, setStudents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [students, setStudents] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
 
@@ -52,8 +53,7 @@ const Header = () => {
 
         <div className="dropdown">
           <img
-            src="#
-            "
+            src={Avatar}
             width="45"
             height="45"
             className="rounded-circle user-avatar"

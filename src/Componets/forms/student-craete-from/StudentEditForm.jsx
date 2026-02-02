@@ -6,7 +6,6 @@ import { useLanguage } from "../../../context/LanguageContext";
 import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import { studentFormText } from "../../../i18n/studentForm";
-import backArrow from "../../../assets/svg/chevron.png";
 
 const API_URL = "https://localhost:7000/api/Student";
 
@@ -18,16 +17,16 @@ const StudentEditForm = () => {
 
   const [formData, setFormData] = useState({
     nameWithFathersname: "",
-    country: "",
-    recordYear: "",
-    studentStatus: "NEW",
+    address: "",
+    country: "India",
     dateOfBirth: "",
     dateOfAdmission: "",
     ability: "",
     class: "",
     classleavingDate: "",
-    classAtLeaving: "",
-    reasoneForLeaving: "",
+    resoneForLeaving: "",
+    classLeavingTime: "",
+    studentRecordYear: "",
     dateofDigri: "",
     quality: "",
     studentStatus: 1,
@@ -44,7 +43,7 @@ const StudentEditForm = () => {
           nameWithFathersname: data.nameWithFathersname || "",
           address: data.address || "",
           country: data.country || "",
-          recordYear: data.recordYear || "",
+          studentRecordYear: data.studentRecordYear?.split("T")[0] || "",
           studentStatus: data.studentStatus || "NEW",
           dateOfBirth: data.dateOfBirth?.split("T")[0] || "",
           dateOfAdmission: data.dateOfAdmission?.split("T")[0] || "",
@@ -52,11 +51,13 @@ const StudentEditForm = () => {
           class: data.class || "",
           classleavingDate: data.classleavingDate?.split("T")[0] || "",
           classAtLeaving: data.classAtLeaving || "",
-          reasoneForLeaving: data.reasoneForLeaving || "",
+          classLeavingTime: data.classLeavingTime || "",
+          resoneForLeaving: data.resoneForLeaving || "",
           dateofDigri: data.dateofDigri?.split("T")[0] || "",
           quality: data.quality || "",
         });
-      } catch {
+      } catch (error) {
+        console.error("Fetch Error:", error);
         Swal.fire("Error", "Failed to load student data", "error");
       }
     };
@@ -67,40 +68,41 @@ const StudentEditForm = () => {
   /* ================= HANDLE CHANGE ================= */
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  /* ================= VALIDATION ================= */
-  const validateForm = () => {
-    if (!formData.nameWithFathersname.trim()) return t.name + " is required";
-    if (!formData.country.trim()) return t.country + " is required";
-    if (!formData.dateOfBirth) return t.dob + " is required";
-    if (!formData.dateOfAdmission) return t.doa + " is required";
-    if (!formData.class.trim()) return t.class + " is required";
-    if (!formData.studentStatus.trim()) return t.studentStatus + " is required";
-
-    return null;
-  };
-
-  /* ================= UPDATE ================= */
+  /* ================= UPDATE STUDENT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const errorMessage = validateForm();
-    if (errorMessage) {
-      Swal.fire({
-        icon: "warning",
-        title: "Required Field",
-        text: errorMessage,
-      });
-      return;
-    }
 
+    const payload = {
+      id: Number(id),
+      nameWithFathersname: formData.nameWithFathersname,
+      address: formData.address,
+      country: formData.country,
+
+      dateOfBirth: formData.dateOfBirth || null,
+      dateOfAdmission: formData.dateOfAdmission || null,
+
+      ability: formData.ability || null,
+      class: formData.class,
+
+      classleavingDate: formData.classleavingDate || null,
+      classLeavingTime: formData.classLeavingTime || null,
+      resoneForLeaving: formData.resoneForLeaving || null,
+
+      studentRecordYear: formData.studentRecordYear,
+      dateofDigri: formData.dateofDigri || null,
+      quality: formData.quality || null,
+
+      studentStatus: Number(formData.studentStatus),
+    };
 
     try {
-      await axios.put(`${API_URL}/${id}`, {
-        ...formData,
-        id: Number(id),
-      });
+      await axios.put(`${API_URL}/${id}`, payload);
 
       Swal.fire({
         icon: "success",
@@ -111,7 +113,8 @@ const StudentEditForm = () => {
       });
 
       navigate("/layout/students-table");
-    } catch {
+    } catch (error) {
+      console.error("Update Error:", error.response?.data);
       Swal.fire("Error", "Update failed", "error");
     }
   };
@@ -120,19 +123,14 @@ const StudentEditForm = () => {
     <div className="studentCreateFrom">
       <div className="heading d-flex bg-primary text-white rounded mb-2">
         <div className="w-25">
-          <Link to="/layout/students-table">
-            <button type="button" className="btn btn-primary">
-              <span>
-                <img
-                  src={backArrow}
-                  alt=""
-                  style={{
-                    width: "12px",
-                    height: "12px",
-                    paddingBottom: "2px",
-                  }}
-                />
-              </span>{" "}
+          <Link
+            to="/layout/students-table"
+            className="text-gray-800 px-6 py-2 mb-10 rounded-lg no-underline"
+          >
+            <button type="reset" className="btn btn-primary">
+              <span style={{ letterSpacing: "-4px", marginRight: "6px" }}>
+                {"<< "}
+              </span>
               {t.back}
             </button>
           </Link>
@@ -140,73 +138,86 @@ const StudentEditForm = () => {
         <div className="text-center w-50 fw-bold pt-2">
           <p>{t.editStudentFrom}</p>
         </div>
+        <div className="w-25"></div>
       </div>
       <div className="form-div">
-        <Form onSubmit={handleSubmit}>
-          {/* Name & Country */}
-          <div className="row mt-3">
+        <form onSubmit={handleSubmit} className="p-4 rounded bg-white">
+          {/* Row 1 */}
+          <div className="row g-3">
             <div className="col-md-6">
-              <Form.Label>{t.nameWithFathersName}*</Form.Label>
-              <Form.Control
+              <label className="form-label">{t.name} *</label>
+              <input
+                className="form-control"
                 name="nameWithFathersname"
                 value={formData.nameWithFathersname}
                 placeholder="Enter full name"
                 onChange={handleChange}
+                required
               />
             </div>
 
             <div className="col-md-6">
-              <Form.Label>{t.country}*</Form.Label>
-              <Form.Control
-                name="country"
-                value={formData.country}
+              <label className="form-label">{t.watanAddress} *</label>
+              <input
+                className="form-control"
+                name="address"
+                value={formData.address}
+                placeholder="Enter address"
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
-          {/* Dates */}
-          <div className="row mt-3">
+
+          {/* Row 2 */}
+          <div className="row g-3 mt-2">
             <div className="col-md-6">
-              <Form.Label>{t.dob}*</Form.Label>
-              <Form.Control
+              <label className="form-label">{t.dob} *</label>
+              <input
                 type="date"
                 className="form-control"
                 name="dateOfBirth"
                 value={formData.dateOfBirth}
                 onChange={handleChange}
+                required
               />
             </div>
 
             <div className="col-md-6">
-              <Form.Label>{t.ability}</Form.Label>
-              <Form.Control
-                name="ability"
-                value={formData.ability}
-                onChange={handleChange}
-              />
-            </div>
-
-
-          </div>
-          {/* date of admission and class */}
-          <div className="row mt-3">
-            <div className="col-md-6">
-              <Form.Label>{t.doa}*</Form.Label>
-              <Form.Control
+              <label className="form-label">{t.doa} *</label>
+              <input
                 type="date"
+                className="form-control"
                 name="dateOfAdmission"
                 value={formData.dateOfAdmission}
                 onChange={handleChange}
+                required
+              />
+            </div>
+          </div>
+
+          {/* Row 3 */}
+          <div className="row g-3 mt-2">
+            <div className="col-md-6">
+              <label className="form-label">{t.ability}</label>
+              <input
+                className="form-control"
+                name="ability"
+                value={formData.ability}
+                placeholder="Enter ability"
+                onChange={handleChange}
               />
             </div>
 
             <div className="col-md-6">
-              <Form.Label>{t.class}*</Form.Label>
-              <Form.Control
+              <label className="form-label">{t.class} *</label>
+              <input
+                className="form-control"
                 name="class"
                 value={formData.class}
                 placeholder="Enter class"
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -214,8 +225,8 @@ const StudentEditForm = () => {
           {/* Row 4 */}
           <div className="row g-3 mt-2">
             <div className="col-md-6">
-              <Form.Label>{t.leavingDate}*</Form.Label>
-              <Form.Control
+              <label className="form-label">{t.leavingDate}</label>
+              <input
                 type="date"
                 className="form-control"
                 name="classleavingDate"
@@ -246,33 +257,26 @@ const StudentEditForm = () => {
                 value={formData.classLeavingTime}
                 placeholder="Class at time of leaving"
                 onChange={handleChange}
-                required
               />
             </div>
 
             <div className="col-md-6">
-              <Form.Label>{t.classAtTimeOfLeaving}*</Form.Label>
-              <Form.Control
-                name="classAtLeaving"
-                value={formData.classAtLeaving}
+              <label className="form-label">{t.studentYearRecord} *</label>
+              <input
+                type="date"
+                className="form-control"
+                name="studentRecordYear"
+                value={formData.studentRecordYear}
                 onChange={handleChange}
-                required
               />
             </div>
           </div>
-          {/* reasone for leaving & degree date */}
-          <div className="row mt-3">
+
+          {/* Row 6 */}
+          <div className="row g-3 mt-2">
             <div className="col-md-6">
-              <Form.Label>{t.reasoneForLeaving}*</Form.Label>
-              <Form.Control
-                name="quality"
-                value={formData.reasoneForLeaving}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="col-md-6">
-              <Form.Label>{t.degreeDate}*</Form.Label>
-              <Form.Control
+              <label className="form-label">{t.degreeDate}</label>
+              <input
                 type="date"
                 className="form-control"
                 name="dateofDigri"
@@ -280,33 +284,27 @@ const StudentEditForm = () => {
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className="row mt-3">
+
             <div className="col-md-6">
-              <Form.Label>{t.remark}</Form.Label>
-              <Form.Control
+              <label className="form-label">{t.remark}</label>
+              <input
+                className="form-control"
                 name="quality"
                 value={formData.quality}
                 placeholder="Any remarks"
                 onChange={handleChange}
               />
             </div>
-            <div className="col-md-6">
-              <Form.Label>{t.studentYearRecord}*</Form.Label>
-              <Form.Control
-                type="date"
-                name="recordYear"
-                value={formData.recordYear}
-                onChange={handleChange}
-              />
-            </div>
           </div>
-          {/* Student Status */}
-          <div className="row mt-3">
+
+          {/* Row 7 - Radio inline */}
+          <div className="row g-3 mt-3">
             <div className="col-md-6">
-              <Form.Label>{t.studentStatus} *</Form.Label>
-              <div className="d-flex gap-3">
-                <Form.Check
+              <label className="form-label d-block">{t.studentStatus}</label>
+
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
                   type="radio"
                   name="studentStatus"
                   checked={formData.studentStatus === 1}
@@ -314,7 +312,12 @@ const StudentEditForm = () => {
                     setFormData((p) => ({ ...p, studentStatus: 1 }))
                   }
                 />
-                <label className="form-check-label" style={{ textDecoration: "none", color: "black" }}>{t.new}</label>
+                <label
+                  className="form-check-label"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  {t.new}
+                </label>
               </div>
 
               <div className="form-check form-check-inline">
@@ -327,19 +330,23 @@ const StudentEditForm = () => {
                     setFormData((p) => ({ ...p, studentStatus: 2 }))
                   }
                 />
-                <label className="form-check-label" style={{ textDecoration: "none", color: "black" }}>{t.old}</label>
+                <label
+                  className="form-check-label"
+                  style={{ textDecoration: "none", color: "black" }}
+                >
+                  {t.old}
+                </label>
               </div>
             </div>
           </div>
-          {/* Submit */}
-          <div className="form-buttons text-end mt-4">
-            <button type="submit" className="btn btn-outline-primary">
-              {t.update}
+
+          {/* Buttons */}
+          <div className="d-flex justify-content-end gap-2 mt-4">
+            <button type="submit" className="btn btn-primary">
+              {t.create}
             </button>
           </div>
-
-        </Form>
-
+        </form>
       </div>
     </div>
   );
