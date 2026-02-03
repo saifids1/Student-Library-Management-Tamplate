@@ -13,6 +13,11 @@ import excelIcon from "../../../assets/svg/xlsx-file-format-extension.png";
 import moreicon from "../../../assets/svg/more.png";
 import csvIcon from "../../../assets/svg/csv.png";
 
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+
 const API_URL = "https://localhost:7000/api/Student";
 
 const StudentsTable = () => {
@@ -29,10 +34,12 @@ const StudentsTable = () => {
   const t = studentFormText[language];
 
   useEffect(() => {
+    setLoading(true);
     const fetchStudents = async () => {
       try {
         const res = await axios.get(API_URL);
         setStudents([...res.data].reverse());
+        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch students", error);
       } finally {
@@ -97,6 +104,59 @@ const StudentsTable = () => {
     }
   };
 
+  // exporting data
+  const exportData = filteredStudents.map((s) => ({
+    "Name With Father's Name": s.nameWithFathersname,
+    Country: s.country,
+    "Date of Birth": formatDate(s.dateOfBirth),
+    "Date of Admission": formatDate(s.dateOfAdmission),
+    Class: s.class,
+  }));
+
+  const exportToExcel = () => {
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const data = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+
+    saveAs(data, "students_list.xlsx");
+  };
+
+  const exportToCSV = () => {
+    const worksheet = XLSX.utils.json_to_sheet(exportData);
+    const csv = XLSX.utils.sheet_to_csv(worksheet);
+
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, "students_list.csv");
+  };
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+
+    doc.text("Students List", 14, 15);
+
+    autoTable(doc, {
+      startY: 20,
+      head: [["Name", "Country", "DOB", "DOA", "Class"]],
+      body: filteredStudents.map((s) => [
+        s.nameWithFathersname,
+        s.country,
+        formatDate(s.dateOfBirth),
+        formatDate(s.dateOfAdmission),
+        s.class,
+      ]),
+    });
+
+    doc.save("students_list.pdf");
+  };
+
   return (
     <div className="card students-table">
       <div className="container-fluid px-4 py-3">
@@ -123,18 +183,48 @@ const StudentsTable = () => {
           </div>
 
           <div className=" text-end icons-div">
-            <img src={csvIcon} alt=""  data-toggle="tooltip" data-placement="left" title={t.convertToCSV} />
-            <img src={excelIcon} alt=""  data-toggle="tooltip" data-placement="left" title={t.convertToEXL}/>
-            <img src={pdfIcon} alt=""  data-toggle="tooltip" data-placement="left" title={t.convertToPDF}/>
-            <Link to="/layout/student-create-form"><img src={moreicon} alt=""  data-toggle="tooltip" data-placement="left" title={t.addStudent} /></Link>
+            <img
+              src={csvIcon}
+              alt=""
+              title={t.convertToCSV}
+              style={{ cursor: "pointer" }}
+              onClick={exportToCSV}
+            />
+
+            <img
+              src={excelIcon}
+              alt=""
+              title={t.convertToEXL}
+              style={{ cursor: "pointer" }}
+              onClick={exportToExcel}
+            />
+
+            <img
+              src={pdfIcon}
+              alt=""
+              title={t.convertToPDF}
+              style={{ cursor: "pointer" }}
+              onClick={exportToPDF}
+            />
+
+            <Link to="/layout/student-create-form">
+              <img
+                src={moreicon}
+                alt=""
+                data-toggle="tooltip"
+                data-placement="left"
+                title={t.addStudent}
+              />
+            </Link>
           </div>
         </div>
-
         <hr />
-
         {/* Table */}
         <div className="table-responsive shadow-sm rounded bg-white">
-          <table className="table table-bordered table-striped table-hover mb-0">
+          <table
+            className="table table-bordered table-striped table-hover mb-0"
+            id="student-table"
+          >
             <thead className="bg-light">
               <tr>
                 <th>
@@ -187,16 +277,17 @@ const StudentsTable = () => {
           <div className="row p-0 m-0">
             <div className="col pagination pt-4">
               <p>
-                {t.show} : <input type="number" value={rowsPerPage} readOnly /> {t.enteries}{" "}
-                {startEntry} {t.to} {endEntry} {t.rowOutOf} <b>{totalRecords}</b>
+                {t.show} : <input type="number" value={rowsPerPage} readOnly />{" "}
+                {t.enteries} {startEntry} {t.to} {endEntry} {t.rowOutOf}{" "}
+                <b>{totalRecords}</b>
               </p>
             </div>
 
             <div className="col pt-3 text-end">
               <ul className="pagination justify-content-end">
                 <li className={`page-item ${currentPage === 1 && "disabled"}`}>
-                  <button 
-                  style ={{borderRadius : "5px 0px 0px 5px"}}
+                  <button
+                    style={{ borderRadius: "5px 0px 0px 5px" }}
                     className="page-link"
                     onClick={() => setCurrentPage(currentPage - 1)}
                   >
@@ -210,7 +301,7 @@ const StudentsTable = () => {
                     className={`page-item ${currentPage === i + 1 && "active"}`}
                   >
                     <button
-                    style={{borderRadius: "0px"}}
+                      style={{ borderRadius: "0px" }}
                       className="page-link"
                       onClick={() => setCurrentPage(i + 1)}
                     >
@@ -226,7 +317,7 @@ const StudentsTable = () => {
                 >
                   <button
                     className="page-link"
-                      style ={{borderRadius : "0px 5px 5px 0px"}}
+                    style={{ borderRadius: "0px 5px 5px 0px" }}
                     onClick={() => setCurrentPage(currentPage + 1)}
                   >
                     &raquo;

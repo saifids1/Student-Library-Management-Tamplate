@@ -20,6 +20,9 @@ import ProtectedRoute from "./Componets/Login/ProtectedRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 // ... rest of your App
 
+import NewRecords from "./Componets/records/newRecords";
+import OldRecords from "./Componets/records/oldRecords";
+
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -59,6 +62,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <StudentsTable />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="old-record"
+            element={
+              <ProtectedRoute>
+                <OldRecords />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="new-record"
+            element={
+              <ProtectedRoute>
+                <NewRecords />
               </ProtectedRoute>
             }
           />
