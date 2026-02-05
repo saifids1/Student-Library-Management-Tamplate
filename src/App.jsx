@@ -7,11 +7,11 @@ import {
 
 import "./App.css";
 import Layout from "./Layout";
-import Dashboard from "./Componets/dashboard/Dashboard";
+// import Dashboard from "./Componets/dashboard/Dashboard";
 import "bootstrap/dist/css/bootstrap.min.css";
-import StudentCreateFrom from "./Componets/forms/student-craete-from/StudentCreateFrom";
-import StudentsTable from "./Componets/forms/students/StudentsTable";
-import StudentEditForm from "./Componets/forms/student-craete-from/StudentEditForm";
+import StudentCreateFrom from "./pages/student-craete-from/StudentCreateFrom";
+import StudentsTable from "./pages/students/StudentsTable";
+import StudentEditForm from "./pages/student-craete-from/StudentEditForm";
 
 import { LanguageProvider } from "./context/LanguageContext";
 import Login from "./Componets/Login/Login";
@@ -19,9 +19,11 @@ import ProtectedRoute from "./Componets/Login/ProtectedRoute";
 // src/App.js
 import "bootstrap/dist/css/bootstrap.min.css";
 // ... rest of your App
+import Records from "./pages/records/Records";
 
-import NewRecords from "./Componets/records/newRecords";
-import OldRecords from "./Componets/records/oldRecords";
+
+
+
 
 function App() {
   const router = createBrowserRouter(
@@ -39,14 +41,14 @@ function App() {
             </ProtectedRoute>
           }
         >
-          <Route
+          {/* <Route
             index
             element={
               <ProtectedRoute>
                 <Dashboard />
               </ProtectedRoute>
             }
-          />
+          /> */}
 
           <Route
             path="student-create-form"
@@ -66,18 +68,10 @@ function App() {
             }
           />
           <Route
-            path="old-record"
+            path="records"
             element={
               <ProtectedRoute>
-                <OldRecords />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="new-record"
-            element={
-              <ProtectedRoute>
-                <NewRecords />
+                <Records />
               </ProtectedRoute>
             }
           />
