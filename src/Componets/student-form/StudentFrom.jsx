@@ -21,10 +21,10 @@ const StudentForm = ({
 
   return (
     <form onSubmit={onSubmit} className="p-4 rounded bg-white">
-      {/* Row 1 */}
-      <div className="row g-3">
-        <div className="col-md-6">
-          <label className="form-label">{t.nameWithFathersName} *</label>
+      {/* row  mt-2 1 */}
+      <div className="row  g-3">
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.nameWithFathersName} *</label>
           <input
             className="form-control"
             name="nameWithFathersname"
@@ -35,7 +35,7 @@ const StudentForm = ({
         </div>
 
         <div className="col-md-6">
-          <label className="form-label">{t.watanAddress} *</label>
+          <label className="form-label mt-2">{t.watanAddress} *</label>
           <input
             className="form-control"
             name="country"
@@ -46,10 +46,10 @@ const StudentForm = ({
         </div>
       </div>
 
-      {/* Row 2 */}
-      <div className="row g-3 mt-2">
-        <div className="col-md-6">
-          <label className="form-label">{t.dob} *</label>
+      {/* row  mt-2 2 */}
+      <div className="row  mt-2 g-3 ">
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.dob} *</label>
           <input
             type="date"
             className="form-control"
@@ -61,7 +61,7 @@ const StudentForm = ({
         </div>
 
         <div className="col-md-6">
-          <label className="form-label">{t.doa} *</label>
+          <label className="form-label mt-2">{t.doa} *</label>
           <input
             type="date"
             className="form-control"
@@ -73,35 +73,35 @@ const StudentForm = ({
         </div>
       </div>
 
-      <div className="row g-3 mt-2">
-        <div className="col-md-6">
-          <label className="form-label">{t.ability}</label>
+      <div className="row  mt-2 g-3 ">
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.ability}</label>
           <input
             className="form-control"
             name="ability"
             value={formData.ability}
-            placeholder="Enter ability"
+            placeholder=""
             onChange={handleChange}
           />
         </div>
 
-        <div className="col-md-6">
-          <label className="form-label">{t.class} *</label>
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.class} *</label>
           <input
             className="form-control"
             name="class"
             value={formData.class}
-            placeholder="Enter class"
+            placeholder=""
             onChange={handleChange}
             required
           />
         </div>
       </div>
 
-      {/* Row 4 */}
-      <div className="row g-3 mt-2">
-        <div className="col-md-6">
-          <label className="form-label">{t.leavingDate}</label>
+      {/* row  mt-2 4 */}
+      <div className="row  mt-2 g-3 ">
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.leavingDate}</label>
           <input
             type="date"
             className="form-control"
@@ -111,33 +111,33 @@ const StudentForm = ({
           />
         </div>
 
-        <div className="col-md-6">
-          <label className="form-label">{t.reasoneForLeaving}</label>
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.reasoneForLeaving}</label>
           <input
             className="form-control"
             name="resoneForLeaving"
             value={formData.resoneForLeaving}
-            placeholder="Reason for leaving"
+            placeholder=""
             onChange={handleChange}
           />
         </div>
       </div>
 
-      {/* Row 5 */}
-      <div className="row g-3 mt-2">
-        <div className="col-md-6">
-          <label className="form-label">{t.classAtTimeOfLeaving}</label>
+      {/* row  mt-2 5 */}
+      <div className="row  mt-2 g-3 ">
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.classAtTimeOfLeaving}</label>
           <input
             className="form-control"
             name="classLeavingTime"
             value={formData.classLeavingTime}
-            placeholder="Class at time of leaving"
+            placeholder=""
             onChange={handleChange}
           />
         </div>
 
-        <div className="col-md-6">
-          <label className="form-label">{t.studentYearRecord}</label>
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.studentYearRecord}</label>
           <input
             type="date"
             className="form-control"
@@ -148,10 +148,10 @@ const StudentForm = ({
         </div>
       </div>
 
-      {/* Row 6 */}
-      <div className="row g-3 mt-2">
-        <div className="col-md-6">
-          <label className="form-label">{t.degreeDate}</label>
+      {/* row  mt-2 6 */}
+      <div className="row  mt-2 g-3 ">
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.degreeDate}</label>
           <input
             type="date"
             className="form-control"
@@ -161,22 +161,22 @@ const StudentForm = ({
           />
         </div>
 
-        <div className="col-md-6">
-          <label className="form-label">{t.remark}</label>
+        <div className="col-md-6 ">
+          <label className="form-label mt-2">{t.remark}</label>
           <input
             className="form-control"
             name="quality"
             value={formData.quality}
-            placeholder="Any remarks"
+            placeholder=""
             onChange={handleChange}
           />
         </div>
       </div>
 
-      {/* Row 7 - Radio inline */}
-      <div className="row g-3 mt-3">
-        <div className="col-md-6">
-          <label className="form-label d-block">{t.studentStatus}</label>
+      {/* row  mt-2 7 - Radio inline */}
+      <div className="row  mt-2 g-3 ">
+        <div className="col-md-6 ">
+          <label className="form-label mt-2 d-block">{t.studentStatus}</label>
 
           <div className="form-check form-check-inline">
             <input

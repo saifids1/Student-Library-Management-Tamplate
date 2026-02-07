@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 .row,
 .col {
   padding: 0;
@@ -10,30 +9,105 @@
 }
 [class*="col-"] {
   padding: 0;
-  margin: 0;
+  margin-inline: 0;
 }
-.col-md-9{
+.col-md-9 {
   padding: 0 !important;
   margin: 0;
 }
 
-.container-fluid{
+.container-fluid {
   padding: 0 !important;
   margin: 0 !important;
   width: 100%;
 }
 
-.left-side{
+.left-side {
   width: 25%;
   border-right: 1px solid gainsboro;
 }
 
-.right-side{
+.right-side {
   width: 75%;
   padding: 10px;
 }
 
-
-a{
+a {
   text-decoration: none !important;
+}
+
+
+
+@media (max-width: 767.98px) {
+  .right-side {
+    width: 100%;
+  }
+  .left-side {
+    display: none;
+  }
+  .search-div .p-inputtext {
+    width: 100px !important;
+  }
+  .menu-btn {
+    display: inline-block !important;
+  }
+
+}
+.menu-bar {
+  /* position: relative; */
+  width: 100% !important;
+  display: none;
+}
+
+.menu-bar ul {
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  text-align: start;
+  justify-content: end;
+  list-style: none;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  position: absolute;
+  z-index: 2;
+  overflow-y: scroll;
+  border-radius: 10px;
+}
+
+.menu-bar ul li {
+  width: 95%;
+  margin: auto;
+
+  border: 1px solid gainsboro;
+  /* padding: 5px; */
+
+  margin-block: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menu-bar ul li:hover a {
+  padding-block: 9px !important;
+  border-radius: 10px;
+  color: white;
+  background-color: #0d6efd;
+}
+
+.menu-bar a.active {
+  border-radius: 10px;
+  background-color: #0d6efd;
+  color: #fff !important;
+}
+
+.menu-bar ul li a {
+  padding: 5px;
+  text-decoration: none;
+  color: gray;
+}
+
+.menu-bar ul li a svg {
+  margin-inline: 5px;
+  margin-bottom: 3px;
 }
