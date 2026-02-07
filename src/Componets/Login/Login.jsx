@@ -156,7 +156,7 @@ const Login = () => {
         <div className="row">
           <div className="col-sm-3"></div>
 
-          <div className="col-md-6 mt-4 ">
+          <div className="col-md-6 mt-5 ">
             <div className="login-section">
               <h2 className="text-center pt-4" style={{ fontWeight: "bold" }}>
                 Login

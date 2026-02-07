@@ -59,7 +59,7 @@ const Sidebar = () => {
             {t.StudentsTable}
           </NavLink>
         </li>
-        <li>
+        {/* <li>
           <NavLink
             to="/layout/records"
             style={{ width: "100%", display: "inline-block" }}
@@ -81,7 +81,7 @@ const Sidebar = () => {
             </svg>
             {t.records}
           </NavLink>
-        </li>
+        </li> */}
       </ul>
     </div>
   );
