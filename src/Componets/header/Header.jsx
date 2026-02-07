@@ -4,6 +4,7 @@ import { useLanguage } from "../../context/LanguageContext";
 import { studentFormText } from "../../i18n/studentForm";
 import { useNavigate } from "react-router-dom";
 import Avatar from "../../assets/dasdhboard/avatar.webp"
+import BASE_URL from "../../Constants/constants.js"
 
 const Header = () => {
   // const [students, setStudents] = useState([]);
@@ -16,13 +17,13 @@ const Header = () => {
   const { language, toggleLanguage } = useLanguage();
 
   const nextLanguage =
-    language === "ur" ? "انگریزی میں تبدیل کریں" : "Switch to Urdu";
+    language === "ur" ? "انگریزی" : "Urdu";
 
   const t = studentFormText[language];
 
   const handleLogout = async () => {
     try {
-      await axios.post("https://localhost:7000/api/Account/logout");
+      await axios.post(`${BASE_URL}/Account/logout`);
     } catch (err) {
       console.warn("Logout API failed, clearing local data anyway", err);
     } finally {
@@ -47,7 +48,7 @@ const Header = () => {
       <div className="header-right">
         {/* <img src={Bars} alt="Menu" className="menu-icon" /> */}
 
-        <button className="btn btn-primary mt-1" onClick={toggleLanguage}>
+        <button className="btn btn-primary mt-1 lang-btn" onClick={toggleLanguage}>
           {nextLanguage}
         </button>
 

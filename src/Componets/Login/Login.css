@@ -806,7 +806,7 @@ h6:after {
 }
 @media (max-width: 678px) {
   .login-section {
-    width: unset !important;
+    width: 80% !important;
   }
 }
 label.form-check-label {

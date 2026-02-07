@@ -20,10 +20,8 @@ import ProtectedRoute from "./Componets/Login/ProtectedRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 // ... rest of your App
 import Records from "./pages/records/Records";
-
-
-
-
+import NewStudentRecords from "./pages/records/NewStudentRecords";
+import OldStudentRecords from "./pages/records/OldStudentRecords";
 
 function App() {
   const router = createBrowserRouter(
@@ -36,9 +34,9 @@ function App() {
         <Route
           path="/layout"
           element={
-            <ProtectedRoute>
+            // <ProtectedRoute>
               <Layout />
-            </ProtectedRoute>
+            // </ProtectedRoute>
           }
         >
           {/* <Route
@@ -53,35 +51,51 @@ function App() {
           <Route
             path="student-create-form"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <StudentCreateFrom />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
 
           <Route
             path="students-table"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <StudentsTable />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
           <Route
             path="records"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <Records />
-              </ProtectedRoute>
+              // </ProtectedRoute>
+            }
+          />
+          <Route
+            path="new-records"
+            element={
+              // <ProtectedRoute>
+                <NewStudentRecords />
+              // </ProtectedRoute>
+            }
+          />
+          <Route
+            path="old-records"
+            element={
+              // <ProtectedRoute>
+                <OldStudentRecords />
+              // </ProtectedRoute>
             }
           />
 
           <Route
             path="student/edit/:id"
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <StudentEditForm />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             }
           />
         </Route>

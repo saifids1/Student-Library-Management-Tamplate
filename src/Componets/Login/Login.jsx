@@ -4,7 +4,7 @@ import Swal from "sweetalert2/dist/sweetalert2.js";
 import "sweetalert2/src/sweetalert2.scss";
 import React, { useState, useEffect } from "react";
 import "./Login.css";
-
+import BASE_URL from "../../Constants/constants";
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -68,7 +68,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://localhost:7000/api/Account/login",
+        `${BASE_URL}/Account/login`,
         {
           email: formData.email,
           password: formData.password,
@@ -156,7 +156,7 @@ const Login = () => {
         <div className="row">
           <div className="col-sm-3"></div>
 
-          <div className="col-md-6 mt-4 ">
+          <div className="col-md-6 mt-5 ">
             <div className="login-section">
               <h2 className="text-center pt-4" style={{ fontWeight: "bold" }}>
                 Login
