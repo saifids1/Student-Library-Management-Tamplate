@@ -4,8 +4,9 @@ import Pageheader from "../../Componets/Pageheader";
 import StudentList from "../../Componets/student-list/StudentList";
 import { useLanguage } from "../../context/LanguageContext";
 import { studentFormText } from "../../i18n/studentForm";
+import BASE_URL from "../../Constants/constants";
 
-const API_URL = "https://localhost:7000/api/Student";
+const API_URL = `${BASE_URL}/Student`;
 
 const StudentsTable = () => {
   const [students, setStudents] = useState([]);

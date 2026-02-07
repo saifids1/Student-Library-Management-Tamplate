@@ -52,7 +52,7 @@
   justify-content: flex-end;
 }
 .header-right button {
-  font-size: 14px !important;
+  font-size: 14px;
 }
 
 .lang-btn {
@@ -128,17 +128,31 @@
 /* 📱 Responsive Styles */
 /* ===================== */
 @media (max-width: 768px) {
+  *{
+    font-size: small;
+  }
   .header-center {
-    display: none;
+    
   }
 
   .lang-btn {
-    font-size: 12px;
-    padding: 5px 10px;
+    font-size: 10px !important;
+    padding: 5px 5px;
   }
 
   .user-avatar {
     width: 36px;
     height: 36px;
   }
+  .header-right{
+    width: 30%;
+  }
+  .header-title{
+    font-size: 12px !important;
+  }
+  .header-left {
+    width: 15%;
+  }
+
+
 }
