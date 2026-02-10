@@ -28,6 +28,10 @@ const ProtectedRoute = ({ children }) => {
   if (!auth || !auth.isLoggedIn) {
     return <Navigate to="/" replace />;
   }
+  else{
+    // return <Navigate to="" replace />;
+
+  }
 
   return children;
 };

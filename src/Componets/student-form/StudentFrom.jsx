@@ -10,6 +10,7 @@ const StudentForm = ({
   submitText,
   showClear = false,
   onClear,
+  ReadOnly
 }) => {
   const { language } = useLanguage();
   const t = studentFormText[language];
@@ -31,6 +32,7 @@ const StudentForm = ({
             value={formData.nameWithFathersname}
             onChange={handleChange}
             required
+           readOnly={ReadOnly}
           />
         </div>
 
@@ -42,6 +44,7 @@ const StudentForm = ({
             value={formData.country}
             onChange={handleChange}
             required
+            readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -57,6 +60,7 @@ const StudentForm = ({
             value={formData.dateOfBirth}
             onChange={handleChange}
             required
+            readOnly={ReadOnly}
           />
         </div>
 
@@ -69,6 +73,7 @@ const StudentForm = ({
             value={formData.dateOfAdmission}
             onChange={handleChange}
             required
+            readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -82,18 +87,21 @@ const StudentForm = ({
             value={formData.ability}
             placeholder=""
             onChange={handleChange}
+            readOnly={ReadOnly}
           />
         </div>
 
         <div className="col-md-6 ">
           <label className="form-label mt-2">{t.class} *</label>
           <input
+          type="number"
             className="form-control"
             name="class"
             value={formData.class}
             placeholder=""
             onChange={handleChange}
             required
+            readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -108,6 +116,7 @@ const StudentForm = ({
             name="classleavingDate"
             value={formData.classleavingDate}
             onChange={handleChange}
+            readOnly={ReadOnly}
           />
         </div>
 
@@ -115,10 +124,11 @@ const StudentForm = ({
           <label className="form-label mt-2">{t.reasoneForLeaving}</label>
           <input
             className="form-control"
-            name="resoneForLeaving"
-            value={formData.resoneForLeaving}
+            name="reasonForLeaving"
+            value={formData.reasonForLeaving}
             placeholder=""
             onChange={handleChange}
+            readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -128,11 +138,13 @@ const StudentForm = ({
         <div className="col-md-6 ">
           <label className="form-label mt-2">{t.classAtTimeOfLeaving}</label>
           <input
+          type="number"
             className="form-control"
             name="classLeavingTime"
             value={formData.classLeavingTime}
             placeholder=""
             onChange={handleChange}
+            readOnly={ReadOnly}
           />
         </div>
 
@@ -144,6 +156,7 @@ const StudentForm = ({
             name="studentRecordYear"
             value={formData.studentRecordYear}
             onChange={handleChange}
+            readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -158,6 +171,7 @@ const StudentForm = ({
             name="dateofDigri"
             value={formData.dateofDigri}
             onChange={handleChange}
+            readOnly={ReadOnly}
           />
         </div>
 
@@ -169,6 +183,7 @@ const StudentForm = ({
             value={formData.quality}
             placeholder=""
             onChange={handleChange}
+            readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -185,6 +200,7 @@ const StudentForm = ({
               name="studentStatus"
               checked={formData.studentStatus === 1}
               onChange={() => setFormData((p) => ({ ...p, studentStatus: 1 }))}
+              readOnly={ReadOnly}
             />
             <label
               className="form-check-label"
@@ -201,6 +217,7 @@ const StudentForm = ({
               name="studentStatus"
               checked={formData.studentStatus === 2}
               onChange={() => setFormData((p) => ({ ...p, studentStatus: 2 }))}
+              readOnly={ReadOnly}
             />
             <label
               className="form-check-label"

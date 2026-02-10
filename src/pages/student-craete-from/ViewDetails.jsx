@@ -1,10 +1,10 @@
-// StudentEditForm.jsx
+import React from "react";
+
 import StudentForm from "../../Componets/student-form/StudentFrom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
-
 
 import BASE_URL from "../../Constants/constants.js";
 import Pageheader from "../../Componets/Pageheader.jsx";
@@ -12,8 +12,7 @@ import { useLanguage } from "../../context/LanguageContext";
 import { studentFormText } from "../../i18n/studentForm";
 
 const API_URL = `${BASE_URL}/Student`;
-
-const StudentEditForm = () => {
+const ViewDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [formData, setFormData] = useState(null);
@@ -30,7 +29,7 @@ const StudentEditForm = () => {
         dateOfAdmission: data.dateOfAdmission?.split("T")[0],
         classleavingDate: data.classleavingDate?.split("T")[0],
         dateofDigri: data.dateofDigri?.split("T")[0],
-        studentRecordYear: data.studentRecordYear?.split("T")[0]
+        studentRecordYear: data.studentRecordYear?.split("T")[0],
       });
     });
   }, [id]);
@@ -51,17 +50,18 @@ const StudentEditForm = () => {
 
   return (
     <div>
-      <Pageheader heading={t.EditStudent} backbtn />
+      <Pageheader heading={t.viewDetails} backbtn editStudent={id} />
       <div className="form-div">
         <StudentForm
           formData={formData}
           setFormData={setFormData}
-          onSubmit={handleUpdate}
+          //   onSubmit={handleUpdate}
           submitText={t.update}
+          ReadOnly={true}
         />
       </div>
     </div>
   );
 };
 
-export default StudentEditForm;
+export default ViewDetails;

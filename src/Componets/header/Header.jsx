@@ -33,55 +33,52 @@ const Header = () => {
   };
 
   return (
-    <div className="app-header">
-      {/* LEFT: Logo */}
-      <div className="header-left">
-        <img src="/images/JMLogo.png" alt="Logo" className="header-logo" />
-      </div>
-
-      {/* CENTER: Student Details / Title */}
-      <div className="header-center">
-        <h5 className="header-title">{t.WebsiteName}</h5>
-      </div>
-
-      {/* RIGHT: Existing Controls */}
-      <div className="header-right">
-        {/* <img src={Bars} alt="Menu" className="menu-icon" /> */}
-
-        <button className="btn btn-primary mt-1 lang-btn" onClick={toggleLanguage}>
-          {nextLanguage}
-        </button>
-
-        <div className="dropdown">
-          <img
-            src={Avatar}
-            width="45"
-            height="45"
-            className="rounded-circle user-avatar"
-            alt="User"
-            onClick={toggleDropdown}
-            style={{ cursor: "pointer" }}
-          />
-
-          <div className={`dropdown-menu ${dropdownOpen ? "show" : ""}`}>
-            <div
-              className="subscription-icons d-flex align-items-center"
-              onClick={handleLogout}
+    <header>
+      <div className="app-header">
+        {/* LEFT: Logo */}
+        <div className="header-left">
+          <img src="/images/JMLogo.png" alt="Logo" className="header-logo" />
+        </div>
+        {/* CENTER: Student Details / Title */}
+        <div className="header-center">
+          <h5 className="header-title">{t.WebsiteName}</h5>
+        </div>
+        {/* RIGHT: Existing Controls */}
+        <div className="header-right">
+          {/* <img src={Bars} alt="Menu" className="menu-icon" /> */}
+          <button className="btn btn-primary mt-1 lang-btn" onClick={toggleLanguage}>
+            {nextLanguage}
+          </button>
+          <div className="dropdown">
+            <img
+              src={Avatar}
+              width="45"
+              height="45"
+              className="rounded-circle user-avatar"
+              alt="User"
+              onClick={toggleDropdown}
               style={{ cursor: "pointer" }}
-            >
-              <img
-                src="/images/log-out.svg"
-                className="add-icons"
-                alt="Logout"
-                width="20"
-                height="20"
-              />
-              <span className="dropdown-item">{t.logout}</span>
+            />
+            <div className={`dropdown-menu ${dropdownOpen ? "show" : ""}`}>
+              <div
+                className="subscription-icons d-flex align-items-center"
+                onClick={handleLogout}
+                style={{ cursor: "pointer" }}
+              >
+                <img
+                  src="/images/log-out.svg"
+                  className="add-icons"
+                  alt="Logout"
+                  width="20"
+                  height="20"
+                />
+                <span className="dropdown-item">{t.logout}</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 
