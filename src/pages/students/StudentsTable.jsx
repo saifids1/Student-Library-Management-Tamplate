@@ -43,7 +43,7 @@ const StudentsTable = () => {
       console.log(res.data);
 
       setStudents(res.data.data);
-      setTotal(res.data.totalRecords);
+      setTotalRecords(res.data.totalRecords);
     } catch (err) {
       console.error("Fetch error", err);
     } finally {

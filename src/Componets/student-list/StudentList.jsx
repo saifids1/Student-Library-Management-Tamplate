@@ -110,39 +110,77 @@ const StudentList = ({
     );
   };
   const exportPDF = () => {
-    const currentLang = language; // use context
+    const currentLang = language;
     const labels = studentFormText[currentLang];
 
     const doc = new jsPDF("p", "mm", "a4");
 
-    // ✅ Proper Unicode Urdu font
+    // Load Urdu Font
     doc.addFileToVFS("Urdu.ttf", urduFont);
     doc.addFont("Urdu.ttf", "Urdu", "normal", "Identity-H");
     doc.setFont(currentLang === "ur" ? "Urdu" : "helvetica");
 
-    autoTable(doc, {
-      startY: 20,
-      head: [
-        [
-          labels.nameWithFathersname,
-          labels.country,
-          labels.dateOfBirth,
-          labels.dateOfAdmission,
-          labels.class,
-        ],
-      ],
-      body: exportData.map((r) => [r.Name, r.Country, r.DOB, r.DOA, r.Class]),
-      styles: {
-        font: currentLang === "ur" ? "Urdu" : "helvetica",
-        fontSize: 10,
-        halign: currentLang === "ur" ? "right" : "left",
-      },
-      headStyles: {
-        font: currentLang === "ur" ? "Urdu" : "helvetica",
-      },
-      bodyStyles: {
-        font: currentLang === "ur" ? "Urdu" : "helvetica",
-      },
+    const pageWidth = doc.internal.pageSize.getWidth();
+    let y = 20;
+    const rowHeight = 10;
+    const colWidth = pageWidth / 5;
+
+    // Columns (Reverse for Urdu)
+    const headers =
+      currentLang === "ur"
+        ? [
+            labels.class,
+            labels.dateOfAdmission,
+            labels.dateOfBirth,
+            labels.country,
+            labels.nameWithFathersname,
+          ]
+        : [
+            labels.nameWithFathersname,
+            labels.country,
+            labels.dateOfBirth,
+            labels.dateOfAdmission,
+            labels.class,
+          ];
+
+    const rows = exportData.map((r) =>
+      currentLang === "ur"
+        ? [r.Class, r.DOA, r.DOB, r.Country, r.Name]
+        : [r.Name, r.Country, r.DOB, r.DOA, r.Class],
+    );
+
+    // 🔹 Draw Header
+    headers.forEach((header, i) => {
+      const x =
+        currentLang === "ur" ? pageWidth - colWidth * (i + 1) : colWidth * i;
+
+      doc.rect(x, y, colWidth, rowHeight);
+      doc.text(header, x + colWidth - 2, y + 6, {
+        align: currentLang === "ur" ? "right" : "left",
+      });
+    });
+
+    y += rowHeight;
+
+    // 🔹 Draw Rows
+    rows.forEach((row) => {
+      row.forEach((cell, i) => {
+        const x =
+          currentLang === "ur" ? pageWidth - colWidth * (i + 1) : colWidth * i;
+
+        doc.rect(x, y, colWidth, rowHeight);
+        doc.text(String(cell), x + colWidth - 2, y + 6, {
+          align: currentLang === "ur" ? "right" : "left",
+        });
+      });
+
+      y += rowHeight;
+
+      // Add new page if overflow
+      if (y > 270) {
+        doc.addPage();
+        y = 20;
+      }
     });
 
     doc.save(currentLang === "ur" ? "طلباء.pdf" : "students.pdf");
@@ -260,10 +298,7 @@ const StudentList = ({
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}"
       >
-        <Column
-          field="nameWithFathersname"
-          header={t.nameWithFathersName}
-        />
+        <Column field="nameWithFathersname" header={t.nameWithFathersName} />
         <Column field="country" header={t.country} />
         <Column
           field="dateOfBirth"
