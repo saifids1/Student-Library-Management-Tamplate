@@ -94,15 +94,13 @@ const StudentForm = ({
         <div className="col-md-6 ">
           <label className="form-label mt-2">{t.class} *</label>
           <input
-            type="number"
+            type="text"
             className="form-control"
             name="class"
             value={formData.class}
             placeholder=""
             onChange={handleChange}
             required
-            min="1"
-            max="12"
             readOnly={ReadOnly}
           />
         </div>
@@ -140,13 +138,11 @@ const StudentForm = ({
         <div className="col-md-6 ">
           <label className="form-label mt-2">{t.classAtTimeOfLeaving}</label>
           <input
-            type="number"
+            type="text"
             className="form-control"
             name="classLeavingTime"
             value={formData.classLeavingTime}
             placeholder=""
-            min="1"
-            max="12"
             onChange={handleChange}
             readOnly={ReadOnly}
           />
