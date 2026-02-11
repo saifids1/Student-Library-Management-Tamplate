@@ -40,7 +40,7 @@ const StudentsTable = () => {
           orderDirection: sortOrder === 1 ? "asc" : "desc",
         },
       });
-      console.log(res.data);
+      // console.log(res.data);
 
       setStudents(res.data.data);
       setTotalRecords(res.data.totalRecords);
