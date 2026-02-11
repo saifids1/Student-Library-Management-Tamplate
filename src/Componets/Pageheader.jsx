@@ -49,7 +49,7 @@ const Pageheader = ({ backbtn, heading, editStudent }) => {
           {editStudent ? (
             <button
               className="btn btn-primary"
-              title="Update Student"
+              title={t.update}
           
              onClick={() => handleEdit(editStudent)}
             >

@@ -10,7 +10,7 @@ const StudentForm = ({
   submitText,
   showClear = false,
   onClear,
-  ReadOnly
+  ReadOnly,
 }) => {
   const { language } = useLanguage();
   const t = studentFormText[language];
@@ -32,7 +32,7 @@ const StudentForm = ({
             value={formData.nameWithFathersname}
             onChange={handleChange}
             required
-           readOnly={ReadOnly}
+            readOnly={ReadOnly}
           />
         </div>
 
@@ -94,7 +94,7 @@ const StudentForm = ({
         <div className="col-md-6 ">
           <label className="form-label mt-2">{t.class} *</label>
           <input
-          type="number"
+            type="number"
             className="form-control"
             name="class"
             value={formData.class}
@@ -138,7 +138,7 @@ const StudentForm = ({
         <div className="col-md-6 ">
           <label className="form-label mt-2">{t.classAtTimeOfLeaving}</label>
           <input
-          type="number"
+            type="number"
             className="form-control"
             name="classLeavingTime"
             value={formData.classLeavingTime}
@@ -200,7 +200,7 @@ const StudentForm = ({
               name="studentStatus"
               checked={formData.studentStatus === 1}
               onChange={() => setFormData((p) => ({ ...p, studentStatus: 1 }))}
-              readOnly={ReadOnly}
+              disabled={ReadOnly}
             />
             <label
               className="form-check-label"
@@ -217,7 +217,7 @@ const StudentForm = ({
               name="studentStatus"
               checked={formData.studentStatus === 2}
               onChange={() => setFormData((p) => ({ ...p, studentStatus: 2 }))}
-              readOnly={ReadOnly}
+              disabled={ReadOnly}
             />
             <label
               className="form-check-label"
@@ -240,10 +240,13 @@ const StudentForm = ({
             {t.clear}
           </button>
         )}
-
-        <button type="submit" className="btn btn-primary">
-          {submitText}
-        </button>
+        {submitText ? (
+          <button type="submit" className="btn btn-primary">
+            {submitText}
+          </button>
+        ) : (
+          " "
+        )}
       </div>
     </form>
   );

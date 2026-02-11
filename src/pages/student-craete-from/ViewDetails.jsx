@@ -34,17 +34,17 @@ const ViewDetails = () => {
     });
   }, [id]);
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
+  // const handleUpdate = async (e) => {
+  //   e.preventDefault();
 
-    try {
-      await axios.put(`${API_URL}/${id}`, formData);
-      Swal.fire("Updated", "Student Updated", "success");
-      navigate("/layout/students-table");
-    } catch {
-      Swal.fire("Error", "Update failed", "error");
-    }
-  };
+  //   try {
+  //     await axios.put(`${API_URL}/${id}`, formData);
+  //     Swal.fire("Updated", "Student Updated", "success");
+  //     navigate("/layout/students-table");
+  //   } catch {
+  //     Swal.fire("Error", "Update failed", "error");
+  //   }
+  // };
 
   if (!formData) return null;
 
@@ -56,7 +56,7 @@ const ViewDetails = () => {
           formData={formData}
           setFormData={setFormData}
           //   onSubmit={handleUpdate}
-          submitText={t.update}
+          // submitText={t.update}
           ReadOnly={true}
         />
       </div>

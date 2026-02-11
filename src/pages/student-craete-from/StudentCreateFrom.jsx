@@ -19,12 +19,11 @@ const StudentCreateForm = () => {
 
   const initialState = {
     nameWithFathersname: "",
-    address: "",
     dateOfBirth: "",
     dateOfAdmission: "",
     class: "",
     ability: "",
-    country: "",
+    Country: "",
     classleavingDate: "",
     reasonForLeaving: "",
     classAtTimeOfLeaving: "",
@@ -48,12 +47,12 @@ const StudentCreateForm = () => {
     e.preventDefault();
 
     const requiredFields = [
-      { key: "nameWithFathersname", label: t.NameWithFatherName },
-      { key: "country", label: t.Country },
-      { key: "dateOfAdmission", label: t.DateOfAdmission },
-      { key: "dateOfBirth", label: t.DateOfBirth },
+      { key: "nameWithFathersname", label: t.nameWithFathersname },
+      { key: "country", label: t.country },
+      { key: "dateOfAdmission", label: t.dateOfAdmission },
+      { key: "dateOfBirth", label: t.dateOfBirth },
       { key: "class", label: t.Class },
-      { key: "studentStatus", label: t.StudentStatus },
+      { key: "studentStatus", label: t.studentStatus },
     ];
 
     const missingField = requiredFields.find((field) => !formData[field.key]);

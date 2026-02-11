@@ -11,39 +11,47 @@ const API_URL = `${BASE_URL}/Student/GetAllStudentBypaged`;
 const StudentsTable = () => {
   const { language } = useLanguage();
   const t = studentFormText[language];
+
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // pagination
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(10);
-  const [total, setTotal] = useState(0);
+  const [totalRecords, setTotalRecords] = useState(0);
 
+  // search & sorting
   const [search, setSearch] = useState("");
-  const [sortField, setSortField] = useState(null);
-  const [sortOrder, setSortOrder] = useState(null);
+  const [sortField, setSortField] = useState("CreatedAt");
+  const [sortOrder, setSortOrder] = useState(-1); // -1 = desc
 
   const fetchData = async () => {
     setLoading(true);
 
-    const res = await axios.get(API_URL, {
-      params: {
-        pageNumber: first / rows + 1, // PrimeReact → API
-        pageSize: rows,
-        search: search || null,
-        orderBy: "CreatedAt",
-        orderDirection: "desc",
+    try {
+      const res = await axios.get(API_URL, {
+        params: {
+          pageNumber: first / rows + 1,
+          pageSize: rows,
+          search: search || null,
 
-        // 🔥 map sorting correctly
-        orderBy: sortField || "CreatedAt",
-        orderDirection: sortOrder === 1 ? "asc" : "desc",
-      },
-    });
+          // 🔥 VERY IMPORTANT MAPPING
+          orderBy: sortField,
+          orderDirection: sortOrder === 1 ? "asc" : "desc",
+        },
+      });
+      console.log(res.data);
 
-    setStudents(res.data.data);
-    setTotal(res.data.totalRecords);
-    setLoading(false);
+      setStudents(res.data.data);
+      setTotal(res.data.totalRecords);
+    } catch (err) {
+      console.error("Fetch error", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
+  // 🔁 refetch when state changes
   useEffect(() => {
     fetchData();
   }, [first, rows, search, sortField, sortOrder]);
@@ -51,28 +59,32 @@ const StudentsTable = () => {
   return (
     <>
       <Pageheader heading={t.StudentsList} />
+
       <StudentList
         students={students}
         loading={loading}
-        totalRecords={total}
+        totalRecords={totalRecords}
         first={first}
         rows={rows}
         sortField={sortField}
         sortOrder={sortOrder}
+        refreshData={fetchData}
+        /* pagination */
         onPageChange={(e) => {
           setFirst(e.first);
           setRows(e.rows);
         }}
+        /* sorting */
         onSort={(e) => {
           setSortField(e.sortField);
           setSortOrder(e.sortOrder);
+          setFirst(0); // reset to first page
+        }}
+        /* search */
+        onSearch={(value) => {
+          setSearch(value);
           setFirst(0);
         }}
-        onSearch={(v) => {
-          setSearch(v);
-          setFirst(0);
-        }}
-        refreshData={fetchData}
       />
     </>
   );

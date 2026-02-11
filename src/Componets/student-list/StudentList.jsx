@@ -124,10 +124,10 @@ const StudentList = ({
       startY: 20,
       head: [
         [
-          labels.nameWithFathersName,
+          labels.nameWithFathersname,
           labels.country,
-          labels.dob,
-          labels.doa,
+          labels.dateOfBirth,
+          labels.dateOfAdmission,
           labels.class,
         ],
       ],
@@ -151,24 +151,25 @@ const StudentList = ({
   /* ================= ACTION COLUMN ================= */
   const actionTemplate = (row) => (
     <>
-      <button
-        className="btn btn-outline-primary btn-sm me-2"
-        onClick={() => handleViewDetails(row.id)}
-        title="View Details"
-      >
-        {/* <Info /> */}
-        <span
-          style={{
-            border: "1px solid blue",
-            borderRadius: "50%",
-            padding: "2px 6px",
-          }}
+      <div className="d-flex justify-content-center">
+        <button
+          className="btn btn-outline-primary btn-sm me-2"
+          onClick={() => handleViewDetails(row.id)}
+          title={t.viewDetails}
         >
-          𝓲
-        </span>
-        {/* ✏️ */}
-      </button>
-      {/* <button
+          {/* <Info /> */}
+          <span
+            style={{
+              border: "1px solid blue",
+              borderRadius: "50%",
+              padding: "2px 6px",
+            }}
+          >
+            𝓲
+          </span>
+          {/* ✏️ */}
+        </button>
+        {/* <button
         className="btn btn-outline-primary btn-sm me-2"
         onClick={() => handleEdit(row.id)}
          title="View Details"
@@ -176,13 +177,14 @@ const StudentList = ({
        
         ✏️
       </button> */}
-      <button
-        className="btn btn-outline-danger btn-sm"
-        onClick={() => handleDelete(row.id)}
-        title="Delete Student"
-      >
-        🗑️
-      </button>
+        <button
+          className="btn btn-outline-danger btn-sm"
+          onClick={() => handleDelete(row.id)}
+          title={t.deleteStudent}
+        >
+          🗑️
+        </button>
+      </div>
     </>
   );
 
@@ -261,28 +263,20 @@ const StudentList = ({
         <Column
           field="nameWithFathersname"
           header={t.nameWithFathersName}
-          
         />
-        <Column field="country" header={t.country}  />
+        <Column field="country" header={t.country} />
         <Column
           field="dateOfBirth"
           header={t.dob}
           body={(r) => formatDate(r.dateOfBirth)}
-          
         />
         <Column
           field="dateOfAdmission"
           header={t.doa}
           body={(r) => formatDate(r.dateOfAdmission)}
-          
         />
-        <Column field="class" header={t.class}  />
-        <Column
-          header={t.action}
-          body={actionTemplate}
-          className="text-center justify-content-center"
-          style={{ justifyContent: "center !important", textAlign: "center" }}
-        />
+        <Column field="class" header={t.class} />
+        <Column header={t.action} body={actionTemplate} />
       </DataTable>
     </div>
   );
