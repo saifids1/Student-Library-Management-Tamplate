@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 
-
 import BASE_URL from "../../Constants/constants.js";
 import Pageheader from "../../Componets/Pageheader.jsx";
 import { useLanguage } from "../../context/LanguageContext";
@@ -30,7 +29,7 @@ const StudentEditForm = () => {
         dateOfAdmission: data.dateOfAdmission?.split("T")[0],
         classleavingDate: data.classleavingDate?.split("T")[0],
         dateofDigri: data.dateofDigri?.split("T")[0],
-        studentRecordYear: data.studentRecordYear?.split("T")[0]
+        studentRecordYear: data.studentRecordYear?.split("T")[0],
       });
     });
   }, [id]);
@@ -38,12 +37,26 @@ const StudentEditForm = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
 
+    const studentId = parseInt(id); // use existing id
+
     try {
-      await axios.put(`${API_URL}/${id}`, formData);
-      Swal.fire("Updated", "Student Updated", "success");
+      await axios.put(`${API_URL}/${studentId}`, formData);
+
+      Swal.fire({
+        icon: "success",
+        title: "Updated",
+        text: "Student Updated Successfully",
+      });
+
       navigate("/layout/students-table");
-    } catch {
-      Swal.fire("Error", "Update failed", "error");
+    } catch (error) {
+      console.log(error.response?.data);
+
+      Swal.fire({
+        icon: "error",
+        title: "Update Failed",
+        text: error.response?.data || "Something went wrong",
+      });
     }
   };
 

@@ -101,6 +101,8 @@ const StudentForm = ({
             placeholder=""
             onChange={handleChange}
             required
+            min="1"
+            max="12"
             readOnly={ReadOnly}
           />
         </div>
@@ -143,6 +145,8 @@ const StudentForm = ({
             name="classLeavingTime"
             value={formData.classLeavingTime}
             placeholder=""
+            min="1"
+            max="12"
             onChange={handleChange}
             readOnly={ReadOnly}
           />
