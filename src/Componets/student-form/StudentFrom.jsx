@@ -2,6 +2,7 @@
 import React from "react";
 import { useLanguage } from "../../context/LanguageContext";
 import { studentFormText } from "../../i18n/studentForm";
+import Swal from "sweetalert2";
 
 const StudentForm = ({
   formData,
@@ -16,6 +17,16 @@ const StudentForm = ({
   const t = studentFormText[language];
 
   const handleChange = (e) => {
+    if (ReadOnly) {
+      Swal.fire({
+        icon: "warning",
+        title: "Not Allowed",
+        text: "You cannot edit from here.",
+        confirmButtonColor: "#3085d6",
+      });
+      return;
+    }
+
     const { name, value } = e.target;
     setFormData((p) => ({ ...p, [name]: value }));
   };
@@ -32,7 +43,7 @@ const StudentForm = ({
             value={formData.nameWithFathersname}
             onChange={handleChange}
             required
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
 
@@ -44,7 +55,7 @@ const StudentForm = ({
             value={formData.country}
             onChange={handleChange}
             required
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -60,7 +71,7 @@ const StudentForm = ({
             value={formData.dateOfBirth}
             onChange={handleChange}
             required
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
 
@@ -73,7 +84,7 @@ const StudentForm = ({
             value={formData.dateOfAdmission}
             onChange={handleChange}
             required
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -87,7 +98,7 @@ const StudentForm = ({
             value={formData.ability}
             placeholder=""
             onChange={handleChange}
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
 
@@ -101,7 +112,7 @@ const StudentForm = ({
             placeholder=""
             onChange={handleChange}
             required
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -116,7 +127,7 @@ const StudentForm = ({
             name="classleavingDate"
             value={formData.classleavingDate}
             onChange={handleChange}
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
 
@@ -128,7 +139,7 @@ const StudentForm = ({
             value={formData.reasonForLeaving}
             placeholder=""
             onChange={handleChange}
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -144,7 +155,7 @@ const StudentForm = ({
             value={formData.classLeavingTime}
             placeholder=""
             onChange={handleChange}
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
 
@@ -156,7 +167,7 @@ const StudentForm = ({
             name="studentRecordYear"
             value={formData.studentRecordYear}
             onChange={handleChange}
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
       </div>
@@ -171,7 +182,7 @@ const StudentForm = ({
             name="dateofDigri"
             value={formData.dateofDigri}
             onChange={handleChange}
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
 
@@ -183,7 +194,7 @@ const StudentForm = ({
             value={formData.quality}
             placeholder=""
             onChange={handleChange}
-            readOnly={ReadOnly}
+            // readOnly={ReadOnly}
           />
         </div>
       </div>

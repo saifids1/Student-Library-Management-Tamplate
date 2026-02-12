@@ -44,37 +44,25 @@ const StudentCreateForm = () => {
     formData.class &&
     formData.studentStatus;
 
-  const handleCreate = async (e) => {
-    e.preventDefault();
+const handleCreate = async (e) => {
+  e.preventDefault();
 
-    const requiredFields = [
-      { key: "nameWithFathersname", label: t.nameWithFathersname },
-      { key: "country", label: t.country },
-      { key: "dateOfAdmission", label: t.dateOfAdmission },
-      { key: "dateOfBirth", label: t.dateOfBirth },
-      { key: "class", label: t.Class },
-      { key: "studentStatus", label: t.studentStatus },
-    ];
+  const cleanedData = Object.fromEntries(
+    Object.entries(formData).filter(
+      ([_, value]) => value !== "" && value !== null
+    )
+  );
 
-    const missingField = requiredFields.find((field) => !formData[field.key]);
+  try {
+    await axios.post(API_URL, cleanedData);
+    Swal.fire("Success", "Student Created", "success");
+    navigate("/layout/students-table");
+  } catch (error) {
+    console.log(error.response?.data);
+    Swal.fire("Error", "Create failed", "error");
+  }
+};
 
-    if (missingField) {
-      Swal.fire(
-        "Validation Error",
-        `${missingField.label} is required`,
-        "warning",
-      );
-      return;
-    }
-
-    try {
-      await axios.post(API_URL, formData);
-      Swal.fire("Success", "Student Created", "success");
-      navigate("/layout/students-table");
-    } catch (error) {
-      Swal.fire("Error", "Create failed", "error");
-    }
-  };
 
   return (
     <div>

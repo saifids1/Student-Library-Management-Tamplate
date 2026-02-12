@@ -3,7 +3,7 @@ import StudentForm from "../../Componets/student-form/StudentFrom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 import BASE_URL from "../../Constants/constants.js";
 import Pageheader from "../../Componets/Pageheader.jsx";
@@ -20,43 +20,60 @@ const StudentEditForm = () => {
   const { language } = useLanguage();
   const t = studentFormText[language];
 
+  // ✅ Load student data
   useEffect(() => {
-    axios.get(`${API_URL}/${id}`).then((res) => {
-      const data = res.data;
-      setFormData({
-        ...data,
-        dateOfBirth: data.dateOfBirth?.split("T")[0],
-        dateOfAdmission: data.dateOfAdmission?.split("T")[0],
-        classleavingDate: data.classleavingDate?.split("T")[0],
-        dateofDigri: data.dateofDigri?.split("T")[0],
-        studentRecordYear: data.studentRecordYear?.split("T")[0],
+    axios
+      .get(`${API_URL}/${id}`)
+      .then((res) => {
+        const data = res.data;
+
+        setFormData({
+          ...data,
+          dateOfBirth: data.dateOfBirth?.split("T")[0] || "",
+          dateOfAdmission: data.dateOfAdmission?.split("T")[0] || "",
+          classleavingDate: data.classleavingDate?.split("T")[0] || "",
+          dateofDigri: data.dateofDigri?.split("T")[0] || "",
+          studentRecordYear: data.studentRecordYear?.split("T")[0] || "",
+        });
+      })
+      .catch((err) => {
+        console.error("Error loading student:", err);
       });
-    });
   }, [id]);
 
+  // ✅ Update Handler
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    const studentId = parseInt(id); // use existing id
+    const studentId = parseInt(id);
+
+    const updatedData = { ...formData };
+
+    // ✅ Convert only optional date fields to null
+    const optionalDateFields = [
+      "classleavingDate",
+      "dateofDigri",
+      "studentRecordYear",
+    ];
+
+    optionalDateFields.forEach((field) => {
+      if (!updatedData[field]) {
+        updatedData[field] = null;
+      }
+    });
+
+    // ✅ Force address to empty string
+    updatedData.address = "";
+
+    console.log("Sending:", updatedData);
 
     try {
-      await axios.put(`${API_URL}/${studentId}`, formData);
+      await axios.put(`${API_URL}/${studentId}`, updatedData);
 
-      Swal.fire({
-        icon: "success",
-        title: "Updated",
-        text: "Student Updated Successfully",
-      });
-
+      Swal.fire("Success", "Student Updated", "success");
       navigate("/layout/students-table");
     } catch (error) {
       console.log(error.response?.data);
-
-      Swal.fire({
-        icon: "error",
-        title: "Update Failed",
-        text: error.response?.data || "Something went wrong",
-      });
     }
   };
 
