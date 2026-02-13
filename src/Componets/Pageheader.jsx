@@ -4,6 +4,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { studentFormText } from "../i18n/studentForm";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { FaEdit } from "react-icons/fa";
 
 const Pageheader = ({ backbtn, heading, editStudent }) => {
   const { language } = useLanguage();
@@ -50,10 +51,9 @@ const Pageheader = ({ backbtn, heading, editStudent }) => {
             <button
               className="btn btn-primary"
               title={t.update}
-          
-             onClick={() => handleEdit(editStudent)}
+              onClick={() => handleEdit(editStudent)}
             >
-              <i class="fas fa-edit"></i>
+              <FaEdit />
             </button>
           ) : (
             " "
