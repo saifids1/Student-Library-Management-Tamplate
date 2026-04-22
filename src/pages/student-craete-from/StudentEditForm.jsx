@@ -88,6 +88,7 @@ const StudentEditForm = () => {
           setFormData={setFormData}
           onSubmit={handleUpdate}
           submitText={t.update}
+          updateMode={false}
         />
       </div>
     </div>

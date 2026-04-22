@@ -11,7 +11,7 @@ const Layout = () => {
     <div className='flex flex-col  overflow-x-hidden "overflow-y-scroll [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"'>
       <Header />
       <div className="main">
-        <div className="container-fluid w-100 d-flex">
+        <div className="container-fluid w-100 d-flex ">
           <div className="left-side">
             <Sidebar />
           </div>

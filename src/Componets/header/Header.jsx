@@ -37,7 +37,7 @@ const Header = () => {
       <div className="app-header">
         {/* LEFT: Logo */}
         <div className="header-left">
-          <img src="/images/JMLogo.png" alt="Logo" className="header-logo" />
+          <img src="/KASHIF-UL-ULOOM.-LOGO.png" alt="Logo" className="header-logo" />
         </div>
         {/* CENTER: Student Details / Title */}
         <div className="header-center">

@@ -58,6 +58,7 @@ const ViewDetails = () => {
           //   onSubmit={handleUpdate}
           // submitText={t.update}
           ReadOnly={true}
+          updateMode={true}
         />
       </div>
     </div>

@@ -8,7 +8,7 @@ const Sidebar = () => {
   const t = studentFormText[language];
 
   return (
-    <div className="sidebar">
+    <div className="sidebar ">
       <ul>
         {/* Create Student */}
         <li>
