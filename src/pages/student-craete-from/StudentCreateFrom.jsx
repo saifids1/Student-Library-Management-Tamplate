@@ -18,19 +18,36 @@ const StudentCreateForm = () => {
   const t = studentFormText[language];
 
   const initialState = {
+    studentId: "",
+    aadharCardNo: "",
     nameWithFathersname: "",
+    fathersName: "",
+    mothersName: "",
+    nationality: "",
+    mothersTongue: "",
+    religion: "",
+    caste: "",
+    subCaste: "",
+    placeOfBirth: "",
+    taluka: "",
+    district: "",
+    state: "",
+    country: "",
     dateOfBirth: "",
+    dateOfBirthInWords: "",
+    classAtTimeOfLeaving: "",
     dateOfAdmission: "",
     class: "",
-    address: "",
-    ability: "",
-    country: "",
-    classleavingDate: "",
-    reasonForLeaving: "",
-    classAtTimeOfLeaving: "",
-    studentRecordYear: "",
+    progressInStudy: "",
+    conduct: "",
+    classStudyingSince: "",
     dateofDigri: "",
+    ability: "",
     quality: "",
+    classleavingDate: "",
+    lastSchoolAttended: "",
+    reasonForLeaving: "",
+    studentRecordYear: "",
     studentStatus: 1,
   };
 
@@ -44,25 +61,24 @@ const StudentCreateForm = () => {
     formData.class &&
     formData.studentStatus;
 
-const handleCreate = async (e) => {
-  e.preventDefault();
+  const handleCreate = async (e) => {
+    e.preventDefault();
 
-  const cleanedData = Object.fromEntries(
-    Object.entries(formData).filter(
-      ([_, value]) => value !== "" && value !== null
-    )
-  );
+    const cleanedData = Object.fromEntries(
+      Object.entries(formData).filter(
+        ([_, value]) => value !== "" && value !== null,
+      ),
+    );
 
-  try {
-    await axios.post(API_URL, cleanedData);
-    Swal.fire("Success", "Student Created", "success");
-    navigate("/layout/students-table");
-  } catch (error) {
-    console.log(error.response?.data);
-    Swal.fire("Error", "Create failed", "error");
-  }
-};
-
+    try {
+      await axios.post(API_URL, cleanedData);
+      Swal.fire("Success", "Student Created", "success");
+      navigate("/layout/students-table");
+    } catch (error) {
+      console.log(error.response?.data);
+      Swal.fire("Error", "Create failed", "error");
+    }
+  };
 
   return (
     <div>

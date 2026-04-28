@@ -9,6 +9,7 @@ import html2canvas from "html2canvas";
 import { useRef } from "react";
 import TCPrint from "./TcPrint";
 import BASE_URL from "../../Constants/constants";
+import { DistributeVertical } from "react-bootstrap-icons";
 
 const StudentForm = ({
   formData,
@@ -101,7 +102,9 @@ const StudentForm = ({
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("LeavingCertificate.pdf");
+      const pdfBlob = pdf.output("blob");
+      const url = URL.createObjectURL(pdfBlob);
+      window.open(url);
 
       Swal.fire("Success", "Leaving Certificate Issued!", "success");
     } catch (error) {
@@ -115,28 +118,188 @@ const StudentForm = ({
         {/* row  mt-2 1 */}
         <div className="row  g-3">
           <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.studentsId}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="studentId"
+              value={formData.studentId}
+              onChange={handleChange}
+              required
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label mt-2">{t.UidNo}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="aadharCardNo"
+              value={formData.aadharCardNo}
+              onChange={handleChange}
+              required
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+        </div>
+        <div className="row  g-3">
+          <div className="col-md-6 ">
             <label className="form-label mt-2">{t.nameWithFathersName} *</label>
             <input
-              className="form-control"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
               name="nameWithFathersname"
               value={formData.nameWithFathersname}
               onChange={handleChange}
               required
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label mt-2">{t.FatherName}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="fathersName"
+              value={formData.fathersName}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+        </div>
+        <div className="row  g-3">
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.mothersName}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="mothersName"
+              value={formData.mothersName}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label mt-2">{t.nationality}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="nationality"
+              value={formData.nationality}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+        </div>
+        <div className="row  g-3">
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.mothersTongue}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="mothersTongue"
+              value={formData.mothersTongue}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label mt-2">{t.religion}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="religion"
+              value={formData.religion}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+        </div>
+        <div className="row  g-3">
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.caste}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="caste"
+              value={formData.caste}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label mt-2">Sub Caste</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="subCaste"
+              value={formData.subCaste}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+
+              // readOnly={ReadOnly}
+            />
+          </div>
+        </div>
+        <div className="row  g-3">
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.placeOfBirth}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="placeOfBirth"
+              value={formData.placeOfBirth}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
               // readOnly={ReadOnly}
             />
           </div>
 
           <div className="col-md-6">
-            <label className="form-label mt-2">{t.watanAddress} *</label>
+            <label className="form-label mt-2">{t.taluka}</label>
             <input
-              className="form-control"
-              name="country"
-              value={formData.country}
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="taluka"
+              value={formData.taluka}
               onChange={handleChange}
-              required
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
               // readOnly={ReadOnly}
             />
           </div>
+        </div>
+        <div className="row  g-3">
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.dist}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="district"
+              value={formData.district}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+              // readOnly={ReadOnly}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label mt-2">{t.state}</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+              // readOnly={ReadOnly}
+            />
+          </div>
+        </div>
+        <div className="row  g-3">
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">Country</label>
+            <input
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="country"
+              value={formData.country}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+              // readOnly={ReadOnly}
+            />
+          </div>
+
+          <div className="col-md-6"></div>
         </div>
 
         {/* row  mt-2 2 */}
@@ -145,53 +308,103 @@ const StudentForm = ({
             <label className="form-label mt-2">{t.dob} *</label>
             <input
               type="date"
-              className="form-control"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
               name="dateOfBirth"
               value={formData.dateOfBirth}
               onChange={handleChange}
               required
-              // readOnly={ReadOnly}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
 
           <div className="col-md-6">
-            <label className="form-label mt-2">{t.doa} *</label>
+            <label className="form-label mt-2">{t.dateOfBirthInWords}</label>
             <input
-              type="date"
-              className="form-control"
-              name="dateOfAdmission"
-              value={formData.dateOfAdmission}
+              type="text"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="dateOfBirthInWords"
+              value={formData.dateOfBirthInWords}
               onChange={handleChange}
-              required
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
               // readOnly={ReadOnly}
             />
           </div>
         </div>
-
         <div className="row  mt-2 g-3 ">
           <div className="col-md-6 ">
-            <label className="form-label mt-2">{t.ability}</label>
+            <label className="form-label mt-2">{t.classAtTimeOfLeaving}</label>
             <input
-              className="form-control"
-              name="ability"
-              value={formData.ability}
-              placeholder=""
+              type="text" // ✅ MUST be date
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="classleavingDate"
+              value={formData.classleavingDate}
               onChange={handleChange}
-              // readOnly={ReadOnly}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
 
-          <div className="col-md-6 ">
-            <label className="form-label mt-2">{t.class} *</label>
+          <div className="col-md-6">
+            <label className="form-label mt-2">{t.doa}</label>
             <input
-              type="text"
-              className="form-control"
-              name="class"
-              value={formData.class}
-              placeholder=""
+              type="date"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="dateOfAdmission"
+              value={formData.dateOfAdmission}
               onChange={handleChange}
               required
-              // readOnly={ReadOnly}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+        </div>
+        <div className="row  mt-2 g-3 ">
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.class}*</label>
+            <input
+              type="text"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="class"
+              value={formData.class}
+              onChange={handleChange}
+              required
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <label className="form-label mt-2">{t.progressInStudy}</label>
+            <input
+              type="text"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="progressInStudy"
+              value={formData.progressInStudy}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+        </div>
+        <div className="row  mt-2 g-3 ">
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.conduct}</label>
+            <input
+              type="text"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="conduct"
+              value={formData.conduct}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">
+              {t.lastSchoolAttendedAndClass}
+            </label>
+            <input
+              type="text"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="lastSchoolAttended"
+              value={formData.lastSchoolAttended}
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
         </div>
@@ -202,23 +415,23 @@ const StudentForm = ({
             <label className="form-label mt-2">{t.leavingDate}</label>
             <input
               type="date"
-              className="form-control"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
               name="classleavingDate"
               value={formData.classleavingDate}
               onChange={handleChange}
-              // readOnly={ReadOnly}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
 
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.reasoneForLeaving}</label>
             <input
-              className="form-control"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
               name="reasonForLeaving"
               value={formData.reasonForLeaving}
               placeholder=""
               onChange={handleChange}
-              // readOnly={ReadOnly}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
         </div>
@@ -226,29 +439,20 @@ const StudentForm = ({
         {/* row  mt-2 5 */}
         <div className="row  mt-2 g-3 ">
           <div className="col-md-6 ">
-            <label className="form-label mt-2">{t.classAtTimeOfLeaving}</label>
+            <label className="form-label mt-2">
+              {t.classStudyingSince}
+            </label>
             <input
               type="text"
-              className="form-control"
-              name="classLeavingTime"
-              value={formData.classLeavingTime}
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="classStudyingSince"
+              value={formData.classStudyingSince}
               placeholder=""
               onChange={handleChange}
-              // readOnly={ReadOnly}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
-
-          <div className="col-md-6 ">
-            <label className="form-label mt-2">{t.studentYearRecord}</label>
-            <input
-              type="date"
-              className="form-control"
-              name="studentRecordYear"
-              value={formData.studentRecordYear}
-              onChange={handleChange}
-              // readOnly={ReadOnly}
-            />
-          </div>
+          <div className="col-md-6 "></div>
         </div>
 
         {/* row  mt-2 6 */}
@@ -257,10 +461,11 @@ const StudentForm = ({
             <label className="form-label mt-2">{t.degreeDate}</label>
             <input
               type="date"
-              className="form-control"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
               name="dateofDigri"
               value={formData.dateofDigri}
               onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
               // readOnly={ReadOnly}
             />
           </div>
@@ -268,12 +473,12 @@ const StudentForm = ({
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.remark}</label>
             <input
-              className="form-control"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
               name="quality"
               value={formData.quality}
               placeholder=""
               onChange={handleChange}
-              // readOnly={ReadOnly || formData.issueLeavingCertificate}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
         </div>
@@ -292,7 +497,7 @@ const StudentForm = ({
                 onChange={() =>
                   setFormData((p) => ({ ...p, studentStatus: 1 }))
                 }
-                disabled={ReadOnly}
+                disabled={ReadOnly || formData.issueLeavingCertificate}
               />
               <label
                 className="form-check-label"
@@ -311,7 +516,7 @@ const StudentForm = ({
                 onChange={() =>
                   setFormData((p) => ({ ...p, studentStatus: 2 }))
                 }
-                disabled={ReadOnly}
+                disabled={ReadOnly || formData.issueLeavingCertificate}
               />
               <label
                 className="form-check-label"
@@ -334,12 +539,15 @@ const StudentForm = ({
               {t.clear}
             </button>
           )}
-          {submitText ? (
+          {submitText && !formData.issueLeavingCertificate && (
             <button type="submit" className="btn btn-primary">
               {submitText}
             </button>
-          ) : (
-            " "
+          )}
+          {formData.issueLeavingCertificate && (
+            <button type="submit" className="btn btn-secondary">
+              Leaving Certificate Issued
+            </button>
           )}
         </div>
       </form>
