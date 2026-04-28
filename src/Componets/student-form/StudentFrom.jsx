@@ -60,32 +60,6 @@ const StudentForm = ({
     if (!confirm.isConfirmed) return;
 
     try {
-      // ✅ CALL API FIRST
-      const response = await fetch(
-        `${BASE_URL}/Student/update-leaving-certificate`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: formData.id, // make sure id exists
-            issueLeavingCertificate: true,
-          }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update TC status");
-      }
-
-      // ✅ UPDATE LOCAL STATE (important)
-      setFormData((prev) => ({
-        ...prev,
-        issueLeavingCertificate: true,
-      }));
-
-      // ✅ GENERATE PDF
       const element = printRef.current;
 
       if (!element) {
@@ -93,7 +67,11 @@ const StudentForm = ({
         return;
       }
 
-      const canvas = await html2canvas(element, { scale: 2 });
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true, // ✅ important for images/logo
+      });
+
       const imgData = canvas.toDataURL("image/png");
 
       const pdf = new jsPDF("p", "mm", "a4");
@@ -102,11 +80,13 @@ const StudentForm = ({
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+      // ✅ PREVIEW IN NEW TAB (instead of download)
       const pdfBlob = pdf.output("blob");
       const url = URL.createObjectURL(pdfBlob);
       window.open(url);
 
-      Swal.fire("Success", "Leaving Certificate Issued!", "success");
+      Swal.fire("Success", "Preview opened!", "success");
     } catch (error) {
       Swal.fire("Error", error.message, "error");
     }
@@ -439,9 +419,7 @@ const StudentForm = ({
         {/* row  mt-2 5 */}
         <div className="row  mt-2 g-3 ">
           <div className="col-md-6 ">
-            <label className="form-label mt-2">
-              {t.classStudyingSince}
-            </label>
+            <label className="form-label mt-2">{t.classStudyingSince}</label>
             <input
               type="text"
               className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}

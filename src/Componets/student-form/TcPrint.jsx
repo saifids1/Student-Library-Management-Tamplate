@@ -28,115 +28,138 @@ const TCPrint = forwardRef(({ data }, ref) => {
           <h5 style={{ textAlign: "center" }}>SCHOOL LEAVING CERTIFICATE</h5>
           <br />
 
-          {/* _________________________form ______________________________ */}
-
           <p>
             Sr.No: <span style={{ marginRight: "100px" }}></span> Medium :{" "}
             <b style={{ marginRight: "100px" }}>Urdu</b>
             Udise No: <b style={{ marginRight: "100px" }}>2719110111</b>
             L.C No:
           </p>
+          {/* _________________________form ______________________________ */}
 
-          <p style={{ marginTop: "10px" }}>
-            Student I.D.:
-            <strong>{data.studentId}</strong>
-          </p>
+          {/* FORM */}
+          <div className="tc-form">
+            <p className="tc-row">
+              <span className="print-label">Student I.D.:</span>
+              <span className="print-field">{data.studentId}</span>
+            </p>
 
-          <p style={{ marginTop: "10px" }}>
-            U.I.D No.(Aadhar Card No): <strong>{data.aadharCardNo}</strong>
-          </p>
+            <p className="tc-row">
+              <span className="print-label">U.I.D No (Aadhar):</span>
+              <span className="print-field">{data.aadharCardNo}</span>
+            </p>
 
-          <p style={{ marginTop: "10px" }}>
-            1) Full Name Of The Student :{" "}
-            <strong
-            >
-              {data.nameWithFathersname}
-            </strong>
-          </p>
-          <p style={{ marginTop: "10px" }}>
-            2) Father's Name: <strong>{data.fathersName}</strong>
-          </p>
+            <p className="tc-row">
+              <span className="print-label">1) Full Name of Student:</span>
+              <span className="print-field">{data.nameWithFathersname}</span>
+            </p>
 
-          <p style={{ marginTop: "10px" }}>
-            3) Mother's Name: <strong>{data.mothersName}</strong>
-          </p>
+            <p className="tc-row">
+              <span className="print-label">2) Father's Name:</span>
+              <span className="print-field">{data.fathersName}</span>
+            </p>
 
-          <p style={{ marginTop: "10px" }}>
-            4) Nationality:{" "}
-            <strong style={{ marginRight: "150px" }}>{data.nationality}</strong>
-            {"  "}Mother Tongue: <strong>{data.mothersTongue}</strong>
-          </p>
+            <p className="tc-row">
+              <span className="print-label">3) Mother's Name:</span>
+              <span className="print-field">{data.mothersName}</span>
+            </p>
 
-          <p style={{ marginTop: "10px" }}>
-            5) Religion:{" "}
-            <strong style={{ marginRight: "150px" }}>{data.religion}</strong>
-            {"  "}Caste:{" "}
-            <strong style={{ marginRight: "150px" }}>{data.caste}</strong>
-            {"  "}Sub Caste: <strong>{data.subCaste}</strong>
-          </p>
+            <p className="tc-row">
+              <span className="print-label">4) Nationality:</span>
+              <span className="print-field">{data.nationality}</span>
 
-          <p style={{ marginTop: "10px" }}>
-            6) Place of Birth:{" "}
-            <strong style={{ marginRight: "150px" }}>
-              {data.placeOfBirth}
-            </strong>
-            {"  "}Taluka: <strong>{data.taluka}</strong>
-          </p>
+              <span className="print-label">Mother Tongue:</span>
+              <span className="print-field">{data.mothersTongue}</span>
+            </p>
 
-          <p style={{ marginTop: "10px" }}>
-            7) Dist:{" "}
-            <strong style={{ marginRight: "150px" }}>{data.district}</strong>
-            {"  "}State:{" "}
-            <strong style={{ marginRight: "150px" }}>{data.state}</strong>
-            {"  "}Country: <strong>{data.country}</strong>
-          </p>
-          <p style={{ marginTop: "10px" }}>
-            8) Date of Birth (in figure):
-            <strong>{data.dateOfBirth?.split("T")[0]}</strong>
-          </p>
+            <p className="tc-row">
+              <span className="print-label">5) Religion:</span>
+              <span className="print-field">{data.religion}</span>
 
-          <p style={{ marginTop: "10px" }}>
-            9) Date of Birth (in words):
-            <strong>{data.dateOfBirthInWords}</strong>
-          </p>
-          <p style={{ marginTop: "10px" }}>
-            10) Last School Attended & Class:
-            <strong>{data.lastSchoolAttended}</strong>
-          </p>
+              <span className="print-label">Caste:</span>
+              <span className="print-field">{data.caste}</span>
 
-          <p style={{ marginTop: "10px" }}>
-            11) Date of Admission:
-            <strong style={{ marginRight: "150px" }}>
-              {data.dateOfAdmission?.split("T")[0]}
-            </strong>
-            {"  "}Class: <strong>{data.class}</strong>
-          </p>
+              <span className="print-label">Sub Caste:</span>
+              <span className="print-field">{data.subCaste}</span>
+            </p>
 
-          <p style={{ marginTop: "10px" }}>
-            12) Progress in study:
-            <strong style={{ marginRight: "150px" }}>
-              {data.progressInStudy}
-            </strong>
-            {"  "}Conduct: <strong>{data.conduct}</strong>
-          </p>
+            <p className="tc-row">
+              <span className="print-label">6) Place of Birth:</span>
+              <span className="print-field">{data.placeOfBirth}</span>
 
-          <p style={{ marginTop: "10px" }}>
-            13) Date of Leaving The School:
-            <strong>{data.classleavingDate?.split("T")[0]}</strong>
-          </p>
+              <span className="print-label">Taluka:</span>
+              <span className="print-field">{data.taluka}</span>
+            </p>
 
-          <p style={{ marginTop: "10px" }}>
-            14) Class Studying & since when:
-            <strong>{data.classStudyingSince}</strong>
-          </p>
+            <p className="tc-row">
+              <span className="print-label">7) Dist:</span>
+              <span className="print-field">{data.district}</span>
 
-          <p style={{ marginTop: "10px" }}>
-            15) Reason For Leaving: <strong>{data.reasonForLeaving}</strong>
-          </p>
+              <span className="print-label">State:</span>
+              <span className="print-field">{data.state}</span>
 
-          <p style={{ marginTop: "10px" }}>
-            16) Remark: <strong>{data.quality}</strong>
-          </p>
+              <span className="print-label">Country:</span>
+              <span className="print-field">{data.country}</span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">8) DOB (in figures):</span>
+              <span className="print-field">
+                {data.dateOfBirth?.split("T")[0]}
+              </span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">9) DOB (in words):</span>
+              <span className="print-field">{data.dateOfBirthInWords}</span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">
+                10) Last School Attended & Class:
+              </span>
+              <span className="print-field">{data.lastSchoolAttended}</span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">11) Date of Admission:</span>
+              <span className="print-field">
+                {data.dateOfAdmission?.split("T")[0]}
+              </span>
+
+              <span className="print-label">Class:</span>
+              <span className="print-field">{data.class}</span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">12) Progress:</span>
+              <span className="print-field">{data.progressInStudy}</span>
+
+              <span className="print-label">Conduct:</span>
+              <span className="print-field">{data.conduct}</span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">13) Date of Leaving:</span>
+              <span className="print-field">
+                {data.classleavingDate?.split("T")[0]}
+              </span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">14) Class Studying & Since:</span>
+              <span className="print-field">{data.classStudyingSince}</span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">15) Reason for Leaving:</span>
+              <span className="print-field">{data.reasonForLeaving}</span>
+            </p>
+
+            <p className="tc-row">
+              <span className="print-label">16) Remarks:</span>
+              <span className="print-field">{data.quality}</span>
+            </p>
+          </div>
 
           <p style={{ marginTop: "40px" }}>
             <b>
@@ -160,7 +183,7 @@ const TCPrint = forwardRef(({ data }, ref) => {
               <span>Head Master</span>
             </b>
           </p>
-          <div style={{ marginTop: "80px" }}>
+          <div style={{ marginTop: "100px" }}>
             <p>Note : Unauthorized change are punishable as per rules.</p>
           </div>
         </div>

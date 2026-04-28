@@ -3,12 +3,31 @@
     margin-top: 60px;
     margin-left: 30px;
 }
-
-.tc-print p strong{
-    /* border-bottom: 1px solid black; */
-    /* display: inline-block; */
-    /* width: 350px !important; */
+.tc-print {
+  font-family: "Times New Roman", serif;
+  font-size: 14px;
+  text-transform: capitalize !important;
 }
-.tc-title{
-    border-bottom: none;
+
+.tc-form {
+  width: 100%;
+}
+
+.tc-row {
+  display: flex;
+  align-items: center;
+  margin: 6px 0;
+  padding-right: 40px;
+}
+
+.print-label {
+  min-width: 50px;   /* fixed label width */
+  font-weight: normal;
+}
+
+.print-field {
+  flex: 1;            /* take full remaining width */
+  border-bottom: 1px solid black;
+  padding: 2px 5px;
+  min-height: 18px;
 }
