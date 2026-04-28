@@ -49,7 +49,7 @@ const StudentForm = ({
     const { name, value } = e.target;
     setFormData((p) => ({ ...p, [name]: value }));
   };
-  const handleIssueTc = async () => {
+ const handleIssueTc = async () => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
       text: "You Cannot Change Record after issuing Leaving Certificate!",
@@ -60,6 +60,32 @@ const StudentForm = ({
     if (!confirm.isConfirmed) return;
 
     try {
+      // ✅ CALL API FIRST
+      const response = await fetch(
+        ${BASE_URL}/Student/update-leaving-certificate,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: formData.id, // make sure id exists
+            issueLeavingCertificate: true,
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update TC status");
+      }
+
+      // ✅ UPDATE LOCAL STATE (important)
+      setFormData((prev) => ({
+        ...prev,
+        issueLeavingCertificate: true,
+      }));
+
+      // ✅ GENERATE PDF
       const element = printRef.current;
 
       if (!element) {
@@ -67,11 +93,7 @@ const StudentForm = ({
         return;
       }
 
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true, // ✅ important for images/logo
-      });
-
+      const canvas = await html2canvas(element, { scale: 2 });
       const imgData = canvas.toDataURL("image/png");
 
       const pdf = new jsPDF("p", "mm", "a4");
@@ -80,13 +102,11 @@ const StudentForm = ({
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-
-      // ✅ PREVIEW IN NEW TAB (instead of download)
       const pdfBlob = pdf.output("blob");
       const url = URL.createObjectURL(pdfBlob);
       window.open(url);
 
-      Swal.fire("Success", "Preview opened!", "success");
+      Swal.fire("Success", "Leaving Certificate Issued!", "success");
     } catch (error) {
       Swal.fire("Error", error.message, "error");
     }
