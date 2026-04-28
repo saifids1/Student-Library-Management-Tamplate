@@ -49,7 +49,7 @@ const StudentForm = ({
     const { name, value } = e.target;
     setFormData((p) => ({ ...p, [name]: value }));
   };
- const handleIssueTc = async () => {
+  const handleIssueTc = async () => {
     const confirm = await Swal.fire({
       title: "Are you sure?",
       text: "You Cannot Change Record after issuing Leaving Certificate!",
@@ -62,14 +62,14 @@ const StudentForm = ({
     try {
       // ✅ CALL API FIRST
       const response = await fetch(
-        ${BASE_URL}/Student/update-leaving-certificate,
+        `${BASE_URL}/Student/update-leaving-certificate`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: formData.id, // make sure id exists
+            id: formData?.id,
             issueLeavingCertificate: true,
           }),
         },
@@ -79,7 +79,7 @@ const StudentForm = ({
         throw new Error("Failed to update TC status");
       }
 
-      // ✅ UPDATE LOCAL STATE (important)
+      // ✅ UPDATE LOCAL STATE
       setFormData((prev) => ({
         ...prev,
         issueLeavingCertificate: true,
@@ -102,16 +102,34 @@ const StudentForm = ({
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+
+      // ✅ DOWNLOAD PDF
       const pdfBlob = pdf.output("blob");
       const url = URL.createObjectURL(pdfBlob);
-      window.open(url);
 
-      Swal.fire("Success", "Leaving Certificate Issued!", "success");
+      const link = document.createElement("a");
+      link.href = url;
+
+      // clean filename
+      const fileName = formData?.name?.replace(/\s+/g, "_") || "Student";
+
+      link.download = `Leaving_Certificate_${fileName}.pdf`;
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      URL.revokeObjectURL(url); // cleanup
+
+      Swal.fire(
+        "Success",
+        "Leaving Certificate Issued & Downloaded!",
+        "success",
+      );
     } catch (error) {
       Swal.fire("Error", error.message, "error");
     }
   };
-
   return (
     <>
       <form onSubmit={onSubmit} className="p-4 rounded bg-white">

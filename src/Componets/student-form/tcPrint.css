@@ -21,7 +21,7 @@
 }
 
 .print-label {
-  min-width: 50px;   /* fixed label width */
+  min-width: 40px;   /* fixed label width */
   font-weight: normal;
 }
 
