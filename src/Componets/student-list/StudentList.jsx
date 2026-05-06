@@ -82,110 +82,101 @@ const StudentList = ({
   };
 
   /* ================= EXPORT ================= */
-  const exportData = students.map((s) => ({
+  const exportData = students.map((s, index) => ({
+    "Sr No": index + 1 + first,
     Name: s.nameWithFathersname,
     Country: s.country,
-    DOB: formatDate(s.dateOfBirth),
-    DOA: formatDate(s.dateOfAdmission),
+    "Date of Birth": formatDate(s.dateOfBirth),
+    Quality: s.quality || s.ability || "-",
+    "Date of Admission": formatDate(s.dateOfAdmission),
     Class: s.class,
+    "Leaving Date": formatDate(s.classleavingDate),
+    "Class At Time Of Leaving": s.class,
+    "Reason For Leaving": s.reasonForLeaving,
+    "Degree Date": s.dateofDigri ? formatDate(s.dateofDigri) : "-",
+    Ability: s.ability || "-",
   }));
 
   const exportExcel = () => {
     const ws = XLSX.utils.json_to_sheet(exportData);
     const wb = XLSX.utils.book_new();
+
     XLSX.utils.book_append_sheet(wb, ws, "Students");
-    saveAs(
-      new Blob([XLSX.write(wb, { bookType: "xlsx", type: "array" })]),
-      "students.xlsx",
-    );
+
+    const excelBuffer = XLSX.write(wb, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    saveAs(new Blob([excelBuffer]), "students.xlsx");
   };
 
   const exportCSV = () => {
     const ws = XLSX.utils.json_to_sheet(exportData);
+
+    const csv = XLSX.utils.sheet_to_csv(ws);
+
     saveAs(
-      new Blob([XLSX.utils.sheet_to_csv(ws)], {
-        type: "text/csv;charset=utf-8;",
-      }),
+      new Blob([csv], { type: "text/csv;charset=utf-8;" }),
       "students.csv",
     );
   };
   const exportPDF = () => {
-    const currentLang = language;
-    const labels = studentFormText[currentLang];
+    const doc = new jsPDF("l", "mm", "a4"); // landscape for more columns
 
-    const doc = new jsPDF("p", "mm", "a4");
-
-    // Load Urdu Font
     doc.addFileToVFS("Urdu.ttf", urduFont);
     doc.addFont("Urdu.ttf", "Urdu", "normal", "Identity-H");
-    doc.setFont(currentLang === "ur" ? "Urdu" : "helvetica");
 
-    const pageWidth = doc.internal.pageSize.getWidth();
-    let y = 20;
-    const rowHeight = 10;
-    const colWidth = pageWidth / 5;
+    const isUrdu = language === "ur";
+    doc.setFont(isUrdu ? "Urdu" : "helvetica");
 
-    // Columns (Reverse for Urdu)
-    const headers =
-      currentLang === "ur"
-        ? [
-            labels.class,
-            labels.dateOfAdmission,
-            labels.dateOfBirth,
-            labels.country,
-            labels.nameWithFathersname,
-          ]
-        : [
-            labels.nameWithFathersname,
-            labels.country,
-            labels.dateOfBirth,
-            labels.dateOfAdmission,
-            labels.class,
-          ];
+    const headers = [
+      [
+        t.srNo,
+        t.nameWithFathersName,
+        t.country,
+        t.dob,
+        t.quality,
+        t.doa,
+        t.class,
+        t.leavingDate,
+        t.classAtTimeOfLeaving,
+        t.reasoneForLeaving,
+        t.degreeDate,
+        t.ability,
+      ],
+    ];
 
-    const rows = exportData.map((r) =>
-      currentLang === "ur"
-        ? [r.Class, r.DOA, r.DOB, r.Country, r.Name]
-        : [r.Name, r.Country, r.DOB, r.DOA, r.Class],
-    );
+    const rows = students.map((s, index) => [
+      index + 1 + first,
+      s.nameWithFathersname,
+      s.country,
+      formatDate(s.dateOfBirth),
+      s.quality || s.ability || "-",
+      formatDate(s.dateOfAdmission),
+      s.class,
+      formatDate(s.classleavingDate),
+      s.class,
+      s.reasonForLeaving,
+      s.dateofDigri ? formatDate(s.dateofDigri) : "-",
+      s.ability || "-",
+    ]);
 
-    // 🔹 Draw Header
-    headers.forEach((header, i) => {
-      const x =
-        currentLang === "ur" ? pageWidth - colWidth * (i + 1) : colWidth * i;
-
-      doc.rect(x, y, colWidth, rowHeight);
-      doc.text(header, x + colWidth - 2, y + 6, {
-        align: currentLang === "ur" ? "right" : "left",
-      });
+    autoTable(doc, {
+      head: headers,
+      body: rows,
+      styles: {
+        font: isUrdu ? "Urdu" : "helvetica",
+        halign: isUrdu ? "right" : "left",
+      },
+      headStyles: {
+        halign: isUrdu ? "right" : "left",
+      },
+      margin: { top: 20 },
     });
 
-    y += rowHeight;
-
-    // 🔹 Draw Rows
-    rows.forEach((row) => {
-      row.forEach((cell, i) => {
-        const x =
-          currentLang === "ur" ? pageWidth - colWidth * (i + 1) : colWidth * i;
-
-        doc.rect(x, y, colWidth, rowHeight);
-        doc.text(String(cell), x + colWidth - 2, y + 6, {
-          align: currentLang === "ur" ? "right" : "left",
-        });
-      });
-
-      y += rowHeight;
-
-      // Add new page if overflow
-      if (y > 270) {
-        doc.addPage();
-        y = 20;
-      }
-    });
-
-    doc.save(currentLang === "ur" ? "طلباء.pdf" : "students.pdf");
+    doc.save(isUrdu ? "طلباء.pdf" : "students.pdf");
   };
-
   /* ================= ACTION COLUMN ================= */
   const actionTemplate = (row) => (
     <>
@@ -260,6 +251,7 @@ const StudentList = ({
             alt=""
             title={t.convertToPDF}
             style={{ cursor: "pointer" }}
+            onClick={exportPDF}
           />
           {/* <img
             src={pdfIcon}
@@ -298,6 +290,10 @@ const StudentList = ({
         paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
         currentPageReportTemplate="{first} to {last} of {totalRecords}"
       >
+        <Column
+          header={t.srNo}
+          body={(rowData, options) => options.rowIndex + 1 + first}
+        />
         <Column field="nameWithFathersname" header={t.nameWithFathersName} />
         <Column field="country" header={t.country} />
         <Column
@@ -305,12 +301,22 @@ const StudentList = ({
           header={t.dob}
           body={(r) => formatDate(r.dateOfBirth)}
         />
+        <Column field="quality" header={t.remark} />
         <Column
           field="dateOfAdmission"
           header={t.doa}
           body={(r) => formatDate(r.dateOfAdmission)}
         />
         <Column field="class" header={t.class} />
+        <Column
+          field="classleavingDate"
+          header={t.leavingDate}
+          body={(r) => formatDate(r.classleavingDate)}
+        />
+        <Column field="class" header={t.classAtTimeOfLeaving} />
+        <Column field="reasonForLeaving" header={t.reasoneForLeaving} />
+        <Column field="dateofDigri" header={t.degreeDate} />
+        <Column field="ability" header={t.quality} />
         <Column header={t.action} body={actionTemplate} />
       </DataTable>
     </div>

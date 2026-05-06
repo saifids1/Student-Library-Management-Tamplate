@@ -139,3 +139,6 @@ table td {
   margin-left: 10px;
 }
 
+th{
+  font-size: 12px !important;
+}

@@ -114,3 +114,7 @@ a {
 .main{
   margin-top: 80px;
 }
+
+td{
+  font-size: 12px !important;
+}

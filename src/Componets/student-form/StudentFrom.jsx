@@ -142,7 +142,6 @@ const StudentForm = ({
               name="studentId"
               value={formData.studentId}
               onChange={handleChange}
-              required
               readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
@@ -154,7 +153,6 @@ const StudentForm = ({
               name="aadharCardNo"
               value={formData.aadharCardNo}
               onChange={handleChange}
-              required
               readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
@@ -242,7 +240,7 @@ const StudentForm = ({
           </div>
 
           <div className="col-md-6">
-            <label className="form-label mt-2">Sub Caste</label>
+            <label className="form-label mt-2">{t.subCaste}</label>
             <input
               className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
               name="subCaste"
@@ -306,7 +304,7 @@ const StudentForm = ({
         </div>
         <div className="row  g-3">
           <div className="col-md-6 ">
-            <label className="form-label mt-2">Country</label>
+            <label className="form-label mt-2">{t.country}</label>
             <input
               className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
               name="country"
@@ -352,17 +350,17 @@ const StudentForm = ({
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.classAtTimeOfLeaving}</label>
             <input
-              type="text" // ✅ MUST be date
+              type="text"
               className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
-              name="classleavingDate"
-              value={formData.classleavingDate}
+              name="classAtTimeOfLeaving"
+              value={formData.classAtTimeOfLeaving}
               onChange={handleChange}
               readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
 
           <div className="col-md-6">
-            <label className="form-label mt-2">{t.doa}</label>
+            <label className="form-label mt-2">{t.doa} *</label>
             <input
               type="date"
               className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
@@ -468,7 +466,19 @@ const StudentForm = ({
               readOnly={ReadOnly || formData.issueLeavingCertificate}
             />
           </div>
-          <div className="col-md-6 "></div>
+          <div className="col-md-6 ">
+            <label className="form-label mt-2">{t.quality}</label>
+            <input
+              type="text"
+              className={`form-control ${formData.issueLeavingCertificate ? "bg-secondary text-white" : ""}`}
+              name="ability"
+              value={formData.ability}
+              placeholder=""
+              onChange={handleChange}
+              readOnly={ReadOnly || formData.issueLeavingCertificate}
+            />
+          </div>
+          
         </div>
 
         {/* row  mt-2 6 */}
@@ -569,7 +579,6 @@ const StudentForm = ({
       </form>
       {updateMode &&
         ReadOnly &&
-        formData.studentStatus === 2 &&
         !formData.issueLeavingCertificate && (
           <div className="row  g-3 ">
             <div className="col p-4 text-end">
