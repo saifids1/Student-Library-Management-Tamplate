@@ -88,7 +88,7 @@ const StudentList = ({
     [t.country]: s.country,
     [t.dob]: formatDate(s.dateOfBirth),
     [t.remark]: s.quality || s.ability || "-",
-    [t.doa] : formatDate(s.dateOfAdmission),
+    [t.doa]: formatDate(s.dateOfAdmission),
     [t.class]: s.class,
     [t.leavingDate]: formatDate(s.classleavingDate),
     [t.classAtTimeOfLeaving]: s.class,
@@ -122,12 +122,17 @@ const StudentList = ({
     );
   };
   const exportPDF = () => {
-    const doc = new jsPDF("l", "mm", "a4"); // landscape for more columns
+    const doc = new jsPDF("l", "mm", "a4");
 
+    // ✅ Add Urdu Font
     doc.addFileToVFS("Urdu.ttf", urduFont);
-    doc.addFont("Urdu.ttf", "Urdu", "normal", "Identity-H");
+
+    // ✅ REGISTER FONT
+    doc.addFont("Urdu.ttf", "Urdu", "normal");
 
     const isUrdu = language === "ur";
+
+    // ✅ SET FONT
     doc.setFont(isUrdu ? "Urdu" : "helvetica");
 
     const headers = [
@@ -149,15 +154,15 @@ const StudentList = ({
 
     const rows = students.map((s, index) => [
       index + 1 + first,
-      s.nameWithFathersname,
-      s.country,
+      s.nameWithFathersname || "-",
+      s.country || "-",
       formatDate(s.dateOfBirth),
-      s.quality || s.ability || "-",
+      s.quality || "-",
       formatDate(s.dateOfAdmission),
-      s.class,
+      s.class || "-",
       formatDate(s.classleavingDate),
-      s.class,
-      s.reasonForLeaving,
+      s.class || "-",
+      s.reasonForLeaving || "-",
       s.dateofDigri ? formatDate(s.dateofDigri) : "-",
       s.ability || "-",
     ]);
@@ -165,14 +170,34 @@ const StudentList = ({
     autoTable(doc, {
       head: headers,
       body: rows,
+
       styles: {
+        font: isUrdu ? "Urdu" : "helvetica",
+        fontSize: 9,
+        cellPadding: 2,
+        halign: isUrdu ? "right" : "left",
+        overflow: "linebreak",
+      },
+
+      headStyles: {
         font: isUrdu ? "Urdu" : "helvetica",
         halign: isUrdu ? "right" : "left",
       },
-      headStyles: {
-        halign: isUrdu ? "right" : "left",
+
+      bodyStyles: {
+        font: isUrdu ? "Urdu" : "helvetica",
       },
-      margin: { top: 20 },
+
+      didParseCell: function (data) {
+        if (isUrdu) {
+          data.cell.styles.font = "Urdu";
+          data.cell.styles.halign = "right";
+        }
+      },
+
+      margin: {
+        top: 20,
+      },
     });
 
     doc.save(isUrdu ? "طلباء.pdf" : "students.pdf");
@@ -191,8 +216,7 @@ const StudentList = ({
             style={{
               border: "1px solid blue",
               borderRadius: "50%",
-              padding: "2px 6px"
-              
+              padding: "2px 6px",
             }}
           >
             𝓲

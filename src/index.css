@@ -113,6 +113,7 @@ a {
 }
 .main{
   margin-top: 80px;
+  text-transform: capitalize;
 }
 
 td{
