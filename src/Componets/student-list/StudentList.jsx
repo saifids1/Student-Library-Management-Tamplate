@@ -83,18 +83,18 @@ const StudentList = ({
 
   /* ================= EXPORT ================= */
   const exportData = students.map((s, index) => ({
-    "Sr No": index + 1 + first,
-    Name: s.nameWithFathersname,
-    Country: s.country,
-    "Date of Birth": formatDate(s.dateOfBirth),
-    Quality: s.quality || s.ability || "-",
-    "Date of Admission": formatDate(s.dateOfAdmission),
-    Class: s.class,
-    "Leaving Date": formatDate(s.classleavingDate),
-    "Class At Time Of Leaving": s.class,
-    "Reason For Leaving": s.reasonForLeaving,
-    "Degree Date": s.dateofDigri ? formatDate(s.dateofDigri) : "-",
-    Ability: s.ability || "-",
+    [t.srNo]: index + 1 + first,
+    [t.nameWithFathersName]: s.nameWithFathersname,
+    [t.country]: s.country,
+    [t.dob]: formatDate(s.dateOfBirth),
+    [t.remark]: s.quality || s.ability || "-",
+    [t.doa] : formatDate(s.dateOfAdmission),
+    [t.class]: s.class,
+    [t.leavingDate]: formatDate(s.classleavingDate),
+    [t.classAtTimeOfLeaving]: s.class,
+    [t.reasoneForLeaving]: s.reasonForLeaving,
+    [t.degreeDate]: s.dateofDigri ? formatDate(s.dateofDigri) : "-",
+    [t.ability]: s.ability || "-",
   }));
 
   const exportExcel = () => {
@@ -180,7 +180,7 @@ const StudentList = ({
   /* ================= ACTION COLUMN ================= */
   const actionTemplate = (row) => (
     <>
-      <div className="d-flex justify-content-center">
+      <div className="d-flex justify-content-center table-action-div">
         <button
           className="btn btn-outline-primary btn-sm me-2"
           onClick={() => handleViewDetails(row.id)}
@@ -191,7 +191,8 @@ const StudentList = ({
             style={{
               border: "1px solid blue",
               borderRadius: "50%",
-              padding: "2px 6px",
+              padding: "2px 6px"
+              
             }}
           >
             𝓲
@@ -292,6 +293,7 @@ const StudentList = ({
       >
         <Column
           header={t.srNo}
+          className="text-center"
           body={(rowData, options) => options.rowIndex + 1 + first}
         />
         <Column field="nameWithFathersname" header={t.nameWithFathersName} />

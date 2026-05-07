@@ -134,7 +134,7 @@ const StudentForm = ({
     <>
       <form onSubmit={onSubmit} className="p-4 rounded bg-white">
         {/* row  mt-2 1 */}
-        <div className="row  g-3">
+        <div className="row  mt-2 g-3">
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.studentsId}</label>
             <input
@@ -157,7 +157,7 @@ const StudentForm = ({
             />
           </div>
         </div>
-        <div className="row  g-3">
+        <div className="row  mt-2 g-3">
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.nameWithFathersName} *</label>
             <input
@@ -181,7 +181,7 @@ const StudentForm = ({
             />
           </div>
         </div>
-        <div className="row  g-3">
+        <div className="row mt-2 g-3">
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.mothersName}</label>
             <input
@@ -204,7 +204,7 @@ const StudentForm = ({
             />
           </div>
         </div>
-        <div className="row  g-3">
+        <div className="row mt-2 g-3">
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.mothersTongue}</label>
             <input
@@ -227,7 +227,7 @@ const StudentForm = ({
             />
           </div>
         </div>
-        <div className="row  g-3">
+        <div className="row mt-2 g-3">
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.caste}</label>
             <input
@@ -252,7 +252,7 @@ const StudentForm = ({
             />
           </div>
         </div>
-        <div className="row  g-3">
+        <div className="row  mt-2 g-3">
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.placeOfBirth}</label>
             <input
@@ -277,7 +277,7 @@ const StudentForm = ({
             />
           </div>
         </div>
-        <div className="row  g-3">
+        <div className="row  mt-2 g-3">
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.dist}</label>
             <input
@@ -302,7 +302,7 @@ const StudentForm = ({
             />
           </div>
         </div>
-        <div className="row  g-3">
+        <div className="row  mt-2 g-3">
           <div className="col-md-6 ">
             <label className="form-label mt-2">{t.country}</label>
             <input

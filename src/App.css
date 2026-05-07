@@ -140,5 +140,10 @@ table td {
 }
 
 th{
-  font-size: 12px !important;
+  /* font-size: 12px !important; */
+}
+.table-action-div button{
+  font-size: 10px !important;
+  /* width: 10px !important; */
+  /* height: 10px !important; */
 }
